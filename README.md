@@ -23,7 +23,17 @@ More information about Chrome Custom Tabs available at: https://developer.chrome
 
 To start using this library, add these lines to the `build.gradle` of your project:
 
-**TODO**: Move to own repo + bintray at some point in the future.
+```groovy
+repositories {
+    maven {
+        url  "http://dl.bintray.com/novoda/maven" 
+    }
+}
+
+dependencies {
+    compile 'com.novoda:simple-chrome-custom-tabs:0.0.1'
+}
+```    
 
 
 ## Simple usage
