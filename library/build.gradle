@@ -39,10 +39,10 @@ dependencies {
 publish {
     userOrg = 'novoda'
     groupId = 'com.novoda'
-    artifactId = 'easy-custom-tabs'
+    artifactId = 'simple-chrome-custom-tabs'
     publishVersion = '0.0.1'
     description = 'Provides easy integration of Chrome Custom Tabs into your project.'
-    website = 'https://github.com/novoda/spikes/EasyCustomTabs'
+    website = 'https://github.com/novoda/simplechromecustomtabs'
 }
 
 apply from: "$project.rootDir/code-quality/android-code-quality.gradle"
