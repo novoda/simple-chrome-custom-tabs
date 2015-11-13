@@ -1,6 +1,8 @@
 package com.novoda.easycustomtabs.demo;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import static com.novoda.easycustomtabs.provider.EasyCustomTabsAvailableAppProvi
 public class ExtendedDemoActivity extends AppCompatActivity {
 
     private static final Uri WEB_URL = Uri.parse("http://www.novoda.com");
+    private static final int REQUEST_CODE_VIEW_SOURCE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +55,24 @@ public class ExtendedDemoActivity extends AppCompatActivity {
             //TODO customize a bit more.
             return easyCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
                     .showingTitle()
-                    .withUrlBarHiding();
+                    .withUrlBarHiding()
+                    .withActionButton(
+                            BitmapFactory.decodeResource
+                                    (getResources(), android.R.drawable.ic_menu_mapmode), getString(R.string.novoda_london), navigateToNovodaLondon(), false
+                    )
+                    .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode());
         }
     };
+
+    private PendingIntent navigateToNovodaLondon() {
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:51.5411671,-0.0947801"));
+        return PendingIntent.getActivity(ExtendedDemoActivity.this, REQUEST_CODE_VIEW_SOURCE, viewIntent, 0);
+    }
+
+    private PendingIntent viewSourceCode() {
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/novoda/simplechromecustomtabs"));
+        return PendingIntent.getActivity(ExtendedDemoActivity.this, REQUEST_CODE_VIEW_SOURCE, viewIntent, 0);
+    }
 
     @Override
     protected void onResume() {
