@@ -21,6 +21,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     private static final Uri WEB_URL = Uri.parse("http://www.novoda.com");
     private static final int REQUEST_CODE_VIEW_SOURCE = 1;
+    private static final int REQUEST_CODE_NOVODA_LONDON = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     private PendingIntent navigateToNovodaLondon() {
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:51.5411671,-0.0947801"));
-        return PendingIntent.getActivity(ExtendedDemoActivity.this, REQUEST_CODE_VIEW_SOURCE, viewIntent, 0);
+        return PendingIntent.getActivity(ExtendedDemoActivity.this, REQUEST_CODE_NOVODA_LONDON, viewIntent, 0);
     }
 
     private PendingIntent viewSourceCode() {
