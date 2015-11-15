@@ -14,7 +14,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.novoda.easycustomtabs.demo"
+        applicationId "com.novoda.simplechromecustomtabs.demo"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
