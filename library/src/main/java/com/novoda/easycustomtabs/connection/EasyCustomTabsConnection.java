@@ -1,10 +1,17 @@
 package com.novoda.easycustomtabs.connection;
 
 import android.app.Activity;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsSession;
 
+import java.util.List;
+
+/**
+ * TODO Open implementation to allow {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}
+ */
 public class EasyCustomTabsConnection implements Connection, ServiceConnectionCallback {
 
     private static final CustomTabsSession NULL_SESSION = null;
