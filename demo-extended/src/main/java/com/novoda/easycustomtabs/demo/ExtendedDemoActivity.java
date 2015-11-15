@@ -2,6 +2,7 @@ package com.novoda.easycustomtabs.demo;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,13 +58,16 @@ public class ExtendedDemoActivity extends AppCompatActivity {
             return easyCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
                     .showingTitle()
                     .withUrlBarHiding()
-                    .withActionButton(
-                            BitmapFactory.decodeResource
-                                    (getResources(), android.R.drawable.ic_menu_mapmode), getString(R.string.novoda_london), navigateToNovodaLondon(), false
-                    )
-                    .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode());
+                    .withActionButton(decodeMapBitmap(), getString(R.string.novoda_london), navigateToNovodaLondon(), false)
+                    .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode())
+                    .withExitAnimations(getApplicationContext(), android.R.anim.slide_in_left, android.R.anim.fade_out)
+                    .withStartAnimations(getApplicationContext(), android.R.anim.fade_in, android.R.anim.slide_out_right);
         }
     };
+
+    private Bitmap decodeMapBitmap() {
+        return BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_mapmode);
+    }
 
     private PendingIntent navigateToNovodaLondon() {
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:51.5411671,-0.0947801"));
