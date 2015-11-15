@@ -10,7 +10,8 @@ import android.support.customtabs.CustomTabsSession;
 
 import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.EasyCustomTabsConnection;
-import com.novoda.simplechromecustomtabs.navigation.EasyCustomTabsWebNavigator;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsWebNavigator;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 import com.novoda.simplechromecustomtabs.navigation.WebNavigator;
@@ -46,7 +47,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     public static void initialize(Context context) {
         applicationContext = context.getApplicationContext();
         LazyHolder.INSTANCE.connection = EasyCustomTabsConnection.newInstance();
-        LazyHolder.INSTANCE.webNavigator = EasyCustomTabsWebNavigator.newInstance();
+        LazyHolder.INSTANCE.webNavigator = SimpleChromeCustomTabsWebNavigator.newInstance();
         LazyHolder.INSTANCE.availableAppProvider = SimpleChromeCustomTabsAvailableAppProvider.newInstance();
     }
 
@@ -67,7 +68,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     /**
      * Provides a {@link IntentCustomizer} to be used to customize the Chrome Custom Tabs by attacking directly to
-     * {@link com.novoda.simplechromecustomtabs.navigation.EasyCustomTabsIntentBuilder}
+     * {@link SimpleChromeCustomTabsIntentBuilder}
      *
      * @param intentCustomizer
      * @return WebNavigator with customized Chrome Custom Tabs.

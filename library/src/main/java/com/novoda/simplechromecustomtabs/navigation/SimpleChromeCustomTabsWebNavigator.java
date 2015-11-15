@@ -7,27 +7,27 @@ import android.support.customtabs.CustomTabsIntent;
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.connection.Connection;
 
-public class EasyCustomTabsWebNavigator implements WebNavigator {
+public class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
 
     private final Connection connection;
     private NavigationFallback navigationFallback;
     private IntentCustomizer intentCustomizer;
 
-    EasyCustomTabsWebNavigator(Connection connection) {
+    SimpleChromeCustomTabsWebNavigator(Connection connection) {
         this.connection = connection;
     }
 
-    public static EasyCustomTabsWebNavigator newInstance() {
+    public static SimpleChromeCustomTabsWebNavigator newInstance() {
         Connection connection = SimpleChromeCustomTabs.getInstance();
-        return new EasyCustomTabsWebNavigator(connection);
+        return new SimpleChromeCustomTabsWebNavigator(connection);
     }
 
-    public EasyCustomTabsWebNavigator withFallback(NavigationFallback navigationFallback) {
+    public SimpleChromeCustomTabsWebNavigator withFallback(NavigationFallback navigationFallback) {
         this.navigationFallback = navigationFallback;
         return this;
     }
 
-    public EasyCustomTabsWebNavigator withIntentCustomizer(IntentCustomizer intentCustomizer) {
+    public SimpleChromeCustomTabsWebNavigator withIntentCustomizer(IntentCustomizer intentCustomizer) {
         this.intentCustomizer = intentCustomizer;
         return this;
     }
@@ -41,7 +41,7 @@ public class EasyCustomTabsWebNavigator implements WebNavigator {
     }
 
     private CustomTabsIntent buildIntent() {
-        EasyCustomTabsIntentBuilder basicIntentBuilder = EasyCustomTabsIntentBuilder.newInstance();
+        SimpleChromeCustomTabsIntentBuilder basicIntentBuilder = SimpleChromeCustomTabsIntentBuilder.newInstance();
 
         if (intentCustomizer == null) {
             return basicIntentBuilder.createIntent();

@@ -15,57 +15,57 @@ import com.novoda.notils.exception.DeveloperError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EasyCustomTabsIntentBuilder {
+public class SimpleChromeCustomTabsIntentBuilder {
 
     private final Connection connection;
     private final List<Composer> composers;
 
-    public EasyCustomTabsIntentBuilder(Connection connection, List<Composer> composers) {
+    public SimpleChromeCustomTabsIntentBuilder(Connection connection, List<Composer> composers) {
         this.connection = connection;
         this.composers = composers;
     }
 
-    public static EasyCustomTabsIntentBuilder newInstance() {
+    public static SimpleChromeCustomTabsIntentBuilder newInstance() {
         List<Composer> composerList = new ArrayList<>();
-        return new EasyCustomTabsIntentBuilder(SimpleChromeCustomTabs.getInstance(), composerList);
+        return new SimpleChromeCustomTabsIntentBuilder(SimpleChromeCustomTabs.getInstance(), composerList);
     }
 
-    public EasyCustomTabsIntentBuilder withToolbarColor(@ColorInt int color) {
+    public SimpleChromeCustomTabsIntentBuilder withToolbarColor(@ColorInt int color) {
         composers.add(new ToolbarColorComposer(color));
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder withUrlBarHiding() {
+    public SimpleChromeCustomTabsIntentBuilder withUrlBarHiding() {
         composers.add(new UrlBarHidingComposer());
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder withMenuItem(String label, PendingIntent pendingIntent) {
+    public SimpleChromeCustomTabsIntentBuilder withMenuItem(String label, PendingIntent pendingIntent) {
         composers.add(new MenuItemComposer(label, pendingIntent));
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder withActionButton(Bitmap icon, String description, PendingIntent pendingIntent, boolean shouldTint) {
+    public SimpleChromeCustomTabsIntentBuilder withActionButton(Bitmap icon, String description, PendingIntent pendingIntent, boolean shouldTint) {
         composers.add(new ActionButtonComposer(icon, description, pendingIntent, shouldTint));
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder withCloseButtonIcon(Bitmap icon) {
+    public SimpleChromeCustomTabsIntentBuilder withCloseButtonIcon(Bitmap icon) {
         composers.add(new CloseButtonIconComposer(icon));
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder withExitAnimations(Context context, @AnimRes int enterResId, @AnimRes int exitResId) {
+    public SimpleChromeCustomTabsIntentBuilder withExitAnimations(Context context, @AnimRes int enterResId, @AnimRes int exitResId) {
         composers.add(new ExitAnimationsComposer(context, enterResId, exitResId));
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder withStartAnimations(Context context, @AnimRes int enterResId, @AnimRes int exitResId) {
+    public SimpleChromeCustomTabsIntentBuilder withStartAnimations(Context context, @AnimRes int enterResId, @AnimRes int exitResId) {
         composers.add(new StartAnimationsComposer(context, enterResId, exitResId));
         return this;
     }
 
-    public EasyCustomTabsIntentBuilder showingTitle() {
+    public SimpleChromeCustomTabsIntentBuilder showingTitle() {
         composers.add(new ShowTitleComposer());
         return this;
     }

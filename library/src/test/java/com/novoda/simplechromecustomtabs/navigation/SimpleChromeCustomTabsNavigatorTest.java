@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
-public class EasyCustomTabsNavigatorTest {
+public class SimpleChromeCustomTabsNavigatorTest {
 
     private static final Uri ANY_URL = Uri.EMPTY;
     private static final CustomTabsIntent ANY_INTENT = new CustomTabsIntent.Builder().build();
@@ -32,7 +32,7 @@ public class EasyCustomTabsNavigatorTest {
     @Mock
     private Activity mockActivity;
     @Mock
-    private EasyCustomTabsIntentBuilder mockEasyCustomTabsIntentBuilder;
+    private SimpleChromeCustomTabsIntentBuilder mockSimpleChromeCustomTabsIntentBuilder;
 
     private WebNavigator webNavigator;
 
@@ -41,10 +41,10 @@ public class EasyCustomTabsNavigatorTest {
         initMocks(this);
 
         SimpleChromeCustomTabs.initialize(Robolectric.application);
-        when(mockIntentCustomizer.onCustomiseIntent(any(EasyCustomTabsIntentBuilder.class))).thenReturn(mockEasyCustomTabsIntentBuilder);
-        when(mockEasyCustomTabsIntentBuilder.createIntent()).thenReturn(ANY_INTENT);
+        when(mockIntentCustomizer.onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class))).thenReturn(mockSimpleChromeCustomTabsIntentBuilder);
+        when(mockSimpleChromeCustomTabsIntentBuilder.createIntent()).thenReturn(ANY_INTENT);
 
-        webNavigator = new EasyCustomTabsWebNavigator(mockConnection);
+        webNavigator = new SimpleChromeCustomTabsWebNavigator(mockConnection);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class EasyCustomTabsNavigatorTest {
 
         webNavigator.navigateTo(ANY_URL, mockActivity);
 
-        verify(mockIntentCustomizer).onCustomiseIntent(any(EasyCustomTabsIntentBuilder.class));
+        verify(mockIntentCustomizer).onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class));
     }
 
 }

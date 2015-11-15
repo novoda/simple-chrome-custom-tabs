@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
-import com.novoda.simplechromecustomtabs.navigation.EasyCustomTabsIntentBuilder;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 
@@ -48,9 +48,9 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     private final IntentCustomizer intentCustomizer = new IntentCustomizer() {
         @Override
-        public EasyCustomTabsIntentBuilder onCustomiseIntent(EasyCustomTabsIntentBuilder easyCustomTabsIntentBuilder) {
+        public SimpleChromeCustomTabsIntentBuilder onCustomiseIntent(SimpleChromeCustomTabsIntentBuilder simpleChromeCustomTabsIntentBuilder) {
             //TODO customize a bit more.
-            return easyCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
+            return simpleChromeCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
                     .showingTitle()
                     .withUrlBarHiding();
         }
