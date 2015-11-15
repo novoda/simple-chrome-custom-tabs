@@ -14,22 +14,22 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
-public class EasyCustomTabsAvailableAppProviderTest {
+public class SimpleChromeCustomTabsAvailableAppProviderTest {
 
     private static final String NON_EMPTY_PACKAGE = "non.empty.package";
 
     @Mock
     private BestPackageFinder mockBestPackageFinder;
     @Mock
-    private EasyCustomTabsAvailableAppProvider.PackageFoundCallback mockPackageFoundCallback;
+    private SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback mockPackageFoundCallback;
 
-    private EasyCustomTabsAvailableAppProvider easyCustomTabsAvailableAppProvider;
+    private SimpleChromeCustomTabsAvailableAppProvider simpleChromeCustomTabsAvailableAppProvider;
 
     @Before
     public void setUp() {
         initMocks(this);
 
-        easyCustomTabsAvailableAppProvider = new EasyCustomTabsAvailableAppProvider(createObservable(), mockBestPackageFinder);
+        simpleChromeCustomTabsAvailableAppProvider = new SimpleChromeCustomTabsAvailableAppProvider(createObservable(), mockBestPackageFinder);
 
     }
 
@@ -41,7 +41,7 @@ public class EasyCustomTabsAvailableAppProviderTest {
 
     @Test
     public void findBestPackageDelegatesToPackageFinder() {
-        easyCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
 
         verify(mockBestPackageFinder).findBestPackage();
     }
@@ -50,14 +50,14 @@ public class EasyCustomTabsAvailableAppProviderTest {
     public void packageIsFoundIfNotNullOrEmpty() {
         when(mockBestPackageFinder.findBestPackage()).thenReturn(NON_EMPTY_PACKAGE);
 
-        easyCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
 
         verify(mockPackageFoundCallback).onPackageFound(NON_EMPTY_PACKAGE);
     }
 
     @Test
     public void packageIsNotFoundIfNull() {
-        easyCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
 
         when(mockBestPackageFinder.findBestPackage()).thenReturn(null);
 
@@ -66,7 +66,7 @@ public class EasyCustomTabsAvailableAppProviderTest {
 
     @Test
     public void packageNotFoundIfEmpty() {
-        easyCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
 
         when(mockBestPackageFinder.findBestPackage()).thenReturn("");
 

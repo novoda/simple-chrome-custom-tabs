@@ -13,7 +13,7 @@ import com.novoda.simplechromecustomtabs.navigation.EasyCustomTabsIntentBuilder;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 
-import static com.novoda.simplechromecustomtabs.provider.EasyCustomTabsAvailableAppProvider.PackageFoundCallback;
+import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
 
 public class ExtendedDemoActivity extends AppCompatActivity {
 

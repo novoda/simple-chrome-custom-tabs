@@ -9,19 +9,19 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class EasyCustomTabsAvailableAppProvider implements AvailableAppProvider {
+public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppProvider {
 
     private final Observable<String> observable;
     private final BestPackageFinder bestPackageFinder;
 
-    EasyCustomTabsAvailableAppProvider(Observable<String> observable, BestPackageFinder bestPackageFinder) {
+    SimpleChromeCustomTabsAvailableAppProvider(Observable<String> observable, BestPackageFinder bestPackageFinder) {
         this.observable = observable;
         this.bestPackageFinder = bestPackageFinder;
     }
 
-    public static EasyCustomTabsAvailableAppProvider newInstance() {
+    public static SimpleChromeCustomTabsAvailableAppProvider newInstance() {
         BestPackageFinder bestPackageFinder = BestPackageFinder.newInstance();
-        return new EasyCustomTabsAvailableAppProvider(createObservable(), bestPackageFinder);
+        return new SimpleChromeCustomTabsAvailableAppProvider(createObservable(), bestPackageFinder);
     }
 
     private static Observable<String> createObservable() {

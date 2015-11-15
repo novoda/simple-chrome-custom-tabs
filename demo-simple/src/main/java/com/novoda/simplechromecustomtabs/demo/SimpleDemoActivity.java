@@ -10,7 +10,7 @@ import android.view.View;
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 
-import static com.novoda.simplechromecustomtabs.provider.EasyCustomTabsAvailableAppProvider.PackageFoundCallback;
+import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
 
 public class SimpleDemoActivity extends AppCompatActivity {
 

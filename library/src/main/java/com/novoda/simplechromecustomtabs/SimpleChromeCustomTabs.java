@@ -15,7 +15,7 @@ import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 import com.novoda.simplechromecustomtabs.navigation.WebNavigator;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
-import com.novoda.simplechromecustomtabs.provider.EasyCustomTabsAvailableAppProvider;
+import com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider;
 import com.novoda.notils.exception.DeveloperError;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         applicationContext = context.getApplicationContext();
         LazyHolder.INSTANCE.connection = EasyCustomTabsConnection.newInstance();
         LazyHolder.INSTANCE.webNavigator = EasyCustomTabsWebNavigator.newInstance();
-        LazyHolder.INSTANCE.availableAppProvider = EasyCustomTabsAvailableAppProvider.newInstance();
+        LazyHolder.INSTANCE.availableAppProvider = SimpleChromeCustomTabsAvailableAppProvider.newInstance();
     }
 
     public Context getContext() {
@@ -128,7 +128,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
      * @param packageFoundCallback
      */
     @Override
-    public void findBestPackage(@NonNull EasyCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback) {
+    public void findBestPackage(@NonNull SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback) {
         availableAppProvider.findBestPackage(packageFoundCallback);
     }
 }
