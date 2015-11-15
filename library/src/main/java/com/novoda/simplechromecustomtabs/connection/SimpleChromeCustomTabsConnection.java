@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsSession;
 
-public class EasyCustomTabsConnection implements Connection, ServiceConnectionCallback {
+public class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
 
     private static final CustomTabsSession NULL_SESSION = null;
 
@@ -13,13 +13,13 @@ public class EasyCustomTabsConnection implements Connection, ServiceConnectionCa
 
     private ConnectedClient client;
 
-    EasyCustomTabsConnection(Binder binder) {
+    SimpleChromeCustomTabsConnection(Binder binder) {
         this.binder = binder;
     }
 
-    public static EasyCustomTabsConnection newInstance() {
+    public static SimpleChromeCustomTabsConnection newInstance() {
         Binder binder = Binder.newInstance();
-        return new EasyCustomTabsConnection(binder);
+        return new SimpleChromeCustomTabsConnection(binder);
     }
 
     @Override

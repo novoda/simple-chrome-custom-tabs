@@ -10,7 +10,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class EasyCustomTabsConnectionTest {
+public class SimpleChromeCustomTabsConnectionTest {
 
     @Mock
     private Binder mockBinder;
@@ -19,25 +19,25 @@ public class EasyCustomTabsConnectionTest {
     @Mock
     private ConnectedClient mockConnectedClient;
 
-    private EasyCustomTabsConnection easyCustomTabsConnection;
+    private SimpleChromeCustomTabsConnection simpleChromeCustomTabsConnection;
 
     @Before
     public void setUp() {
         initMocks(this);
 
-        easyCustomTabsConnection = new EasyCustomTabsConnection(mockBinder);
+        simpleChromeCustomTabsConnection = new SimpleChromeCustomTabsConnection(mockBinder);
     }
 
     @Test
     public void connectToBindsActivityToService() {
-        easyCustomTabsConnection.connectTo(mockActivity);
+        simpleChromeCustomTabsConnection.connectTo(mockActivity);
 
         verify(mockBinder).bindCustomTabsServiceTo(mockActivity);
     }
 
     @Test
     public void disconnectFromUnbindsActivityFromService() {
-        easyCustomTabsConnection.disconnectFrom(mockActivity);
+        simpleChromeCustomTabsConnection.disconnectFrom(mockActivity);
 
         verify(mockBinder).unbindCustomTabsService(mockActivity);
     }
@@ -46,7 +46,7 @@ public class EasyCustomTabsConnectionTest {
     public void warmsUpConnectedClientOnServiceConnected() {
         givenAConnectedClient();
 
-        easyCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
 
         verify(mockConnectedClient).warmup();
     }
@@ -55,7 +55,7 @@ public class EasyCustomTabsConnectionTest {
     public void doesNotWarmUpDisconnectedClientOnServiceConnected() {
         givenADisconnectedClient();
 
-        easyCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
 
         verify(mockConnectedClient, never()).warmup();
     }
@@ -64,8 +64,8 @@ public class EasyCustomTabsConnectionTest {
     public void createsNewSessionWhenClientIsStillConnected() {
         givenAConnectedClient();
 
-        easyCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        easyCustomTabsConnection.newSession();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        simpleChromeCustomTabsConnection.newSession();
 
         verify(mockConnectedClient).newSession();
     }
@@ -74,8 +74,8 @@ public class EasyCustomTabsConnectionTest {
     public void doesNotCreateNewSessionWhenClientIsDisconnected() {
         givenADisconnectedClient();
 
-        easyCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        assertThat(easyCustomTabsConnection.newSession()).isNull();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        assertThat(simpleChromeCustomTabsConnection.newSession()).isNull();
 
         verify(mockConnectedClient, never()).newSession();
     }
@@ -84,8 +84,8 @@ public class EasyCustomTabsConnectionTest {
     public void disconnectsConnectedClientOnServiceDisconnected() {
         givenAConnectedClient();
 
-        easyCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        easyCustomTabsConnection.onServiceDisconnected();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        simpleChromeCustomTabsConnection.onServiceDisconnected();
 
         verify(mockConnectedClient).disconnect();
     }
@@ -94,8 +94,8 @@ public class EasyCustomTabsConnectionTest {
     public void doesNotDisconnectDisconnectedConnectedClientOnServiceDisconnected() {
         givenADisconnectedClient();
 
-        easyCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        easyCustomTabsConnection.onServiceDisconnected();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        simpleChromeCustomTabsConnection.onServiceDisconnected();
 
         verify(mockConnectedClient, never()).disconnect();
     }

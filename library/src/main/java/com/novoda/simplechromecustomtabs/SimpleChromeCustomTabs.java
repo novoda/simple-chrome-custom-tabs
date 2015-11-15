@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsSession;
 
 import com.novoda.simplechromecustomtabs.connection.Connection;
-import com.novoda.simplechromecustomtabs.connection.EasyCustomTabsConnection;
+import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsWebNavigator;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
@@ -46,7 +46,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     public static void initialize(Context context) {
         applicationContext = context.getApplicationContext();
-        LazyHolder.INSTANCE.connection = EasyCustomTabsConnection.newInstance();
+        LazyHolder.INSTANCE.connection = SimpleChromeCustomTabsConnection.newInstance();
         LazyHolder.INSTANCE.webNavigator = SimpleChromeCustomTabsWebNavigator.newInstance();
         LazyHolder.INSTANCE.availableAppProvider = SimpleChromeCustomTabsAvailableAppProvider.newInstance();
     }

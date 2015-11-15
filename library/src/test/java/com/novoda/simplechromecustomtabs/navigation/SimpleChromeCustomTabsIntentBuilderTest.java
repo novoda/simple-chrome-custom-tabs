@@ -3,7 +3,7 @@ package com.novoda.simplechromecustomtabs.navigation;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.novoda.simplechromecustomtabs.connection.EasyCustomTabsConnection;
+import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 import com.novoda.notils.exception.DeveloperError;
 
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     private static final Context ANY_CONTEXT = Robolectric.application;
 
     @Mock
-    private EasyCustomTabsConnection mockEasyCustomTabsConnection;
+    private SimpleChromeCustomTabsConnection mockSimpleChromeCustomTabsConnection;
     @Mock
     private List<Composer> mockComposers;
 
@@ -42,7 +42,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     public void setUp() {
         initMocks(this);
 
-        simpleChromeCustomTabsIntentBuilder = new SimpleChromeCustomTabsIntentBuilder(mockEasyCustomTabsConnection, mockComposers);
+        simpleChromeCustomTabsIntentBuilder = new SimpleChromeCustomTabsIntentBuilder(mockSimpleChromeCustomTabsConnection, mockComposers);
         when(mockComposers.iterator()).thenReturn(Collections.<Composer>emptyListIterator());
     }
 
@@ -59,7 +59,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
 
         simpleChromeCustomTabsIntentBuilder.createIntent();
 
-        verify(mockEasyCustomTabsConnection).newSession();
+        verify(mockSimpleChromeCustomTabsConnection).newSession();
     }
 
     @Test
@@ -126,11 +126,11 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     }
 
     private void givenIsDisconnected() {
-        when(mockEasyCustomTabsConnection.isConnected()).thenReturn(false);
+        when(mockSimpleChromeCustomTabsConnection.isConnected()).thenReturn(false);
     }
 
     private void givenIsConnected() {
-        when(mockEasyCustomTabsConnection.isConnected()).thenReturn(true);
+        when(mockSimpleChromeCustomTabsConnection.isConnected()).thenReturn(true);
     }
 
 }
