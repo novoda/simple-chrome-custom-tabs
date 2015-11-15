@@ -69,7 +69,7 @@ Uri url = ANY_WEBSITE_URL;
 SimpleChromeCustomTabs.getInstance().navigateTo(url, activity);
 ```
 
-**TODO**: Add screenshot.
+[![](https://github.com/novoda/simplechromecustomtabs/blob/master/art/art.png)]()
 
 ## Links
 
