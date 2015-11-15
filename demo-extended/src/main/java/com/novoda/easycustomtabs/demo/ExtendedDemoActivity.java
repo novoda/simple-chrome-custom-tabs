@@ -57,10 +57,10 @@ public class ExtendedDemoActivity extends AppCompatActivity {
     private final IntentCustomizer intentCustomizer = new IntentCustomizer() {
         @Override
         public EasyCustomTabsIntentBuilder onCustomiseIntent(EasyCustomTabsIntentBuilder easyCustomTabsIntentBuilder) {
-            //TODO customize a bit more.
             return easyCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
                     .showingTitle()
                     .withUrlBarHiding()
+                    .withCloseButtonIcon(decodeCloseBitmap())
                     .withActionButton(decodeMapBitmap(), getString(R.string.novoda_london), navigateToNovodaLondon(), false)
                     .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode())
                     .withExitAnimations(getApplicationContext(), android.R.anim.slide_in_left, android.R.anim.fade_out)
@@ -70,6 +70,10 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     private Bitmap decodeMapBitmap() {
         return BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_mapmode);
+    }
+
+    private Bitmap decodeCloseBitmap() {
+        return BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back);
     }
 
     private PendingIntent navigateToNovodaLondon() {
