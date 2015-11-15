@@ -45,6 +45,8 @@ public class ExtendedDemoActivity extends AppCompatActivity {
     private final NavigationFallback navigationFallback = new NavigationFallback() {
         @Override
         public void onFallbackNavigateTo(Uri url) {
+            Toast.makeText(getApplicationContext(), R.string.application_not_found, Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setData(url)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

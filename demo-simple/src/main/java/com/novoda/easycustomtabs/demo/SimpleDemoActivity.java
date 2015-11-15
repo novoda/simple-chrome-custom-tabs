@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.novoda.easycustomtabs.EasyCustomTabs;
 import com.novoda.easycustomtabs.navigation.NavigationFallback;
@@ -35,6 +36,8 @@ public class SimpleDemoActivity extends AppCompatActivity {
     private final NavigationFallback navigationFallback = new NavigationFallback() {
         @Override
         public void onFallbackNavigateTo(Uri url) {
+            Toast.makeText(getApplicationContext(), R.string.application_not_found, Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setData(url)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
