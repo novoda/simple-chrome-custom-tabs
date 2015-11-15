@@ -20,24 +20,24 @@ import com.novoda.notils.exception.DeveloperError;
 
 import java.util.List;
 
-public final class EasyCustomTabs implements WebNavigator, Connection, AvailableAppProvider {
+public final class SimpleChromeCustomTabs implements WebNavigator, Connection, AvailableAppProvider {
 
     private static Context applicationContext;
     private Connection connection;
     private WebNavigator webNavigator;
     private AvailableAppProvider availableAppProvider;
 
-    private EasyCustomTabs() {
+    private SimpleChromeCustomTabs() {
         //no-op
     }
 
     private static class LazyHolder {
-        private static final EasyCustomTabs INSTANCE = new EasyCustomTabs();
+        private static final SimpleChromeCustomTabs INSTANCE = new SimpleChromeCustomTabs();
     }
 
-    public static EasyCustomTabs getInstance() {
+    public static SimpleChromeCustomTabs getInstance() {
         if (applicationContext == null) {
-            throw new DeveloperError("EasyCustomTabs must be initialized. Use EasyCustomTabs.initialize(context)");
+            throw new DeveloperError("SimpleChromeCustomTabs must be initialized. Use SimpleChromeCustomTabs.initialize(context)");
         }
 
         return LazyHolder.INSTANCE;

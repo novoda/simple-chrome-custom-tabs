@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsServiceConnection;
 
-import com.novoda.easycustomtabs.EasyCustomTabs;
+import com.novoda.easycustomtabs.SimpleChromeCustomTabs;
 import com.novoda.easycustomtabs.provider.AvailableAppProvider;
 import com.novoda.easycustomtabs.provider.EasyCustomTabsAvailableAppProvider;
 
@@ -21,7 +21,7 @@ class Binder {
     }
 
     public static Binder newInstance() {
-        AvailableAppProvider availableAppProvider = EasyCustomTabs.getInstance();
+        AvailableAppProvider availableAppProvider = SimpleChromeCustomTabs.getInstance();
         return new Binder(availableAppProvider);
     }
 

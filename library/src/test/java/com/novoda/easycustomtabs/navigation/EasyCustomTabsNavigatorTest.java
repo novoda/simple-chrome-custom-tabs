@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.easycustomtabs.EasyCustomTabs;
+import com.novoda.easycustomtabs.SimpleChromeCustomTabs;
 import com.novoda.easycustomtabs.connection.Connection;
 
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class EasyCustomTabsNavigatorTest {
     public void setUp() {
         initMocks(this);
 
-        EasyCustomTabs.initialize(Robolectric.application);
+        SimpleChromeCustomTabs.initialize(Robolectric.application);
         when(mockIntentCustomizer.onCustomiseIntent(any(EasyCustomTabsIntentBuilder.class))).thenReturn(mockEasyCustomTabsIntentBuilder);
         when(mockEasyCustomTabsIntentBuilder.createIntent()).thenReturn(ANY_INTENT);
 

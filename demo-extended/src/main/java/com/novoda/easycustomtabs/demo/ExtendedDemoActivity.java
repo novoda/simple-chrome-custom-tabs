@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.novoda.easycustomtabs.EasyCustomTabs;
+import com.novoda.easycustomtabs.SimpleChromeCustomTabs;
 import com.novoda.easycustomtabs.navigation.EasyCustomTabsIntentBuilder;
 import com.novoda.easycustomtabs.navigation.IntentCustomizer;
 import com.novoda.easycustomtabs.navigation.NavigationFallback;
@@ -30,7 +30,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            EasyCustomTabs.getInstance().withFallback(navigationFallback)
+            SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
                     .withIntentCustomizer(intentCustomizer)
                     .navigateTo(WEB_URL, ExtendedDemoActivity.this);
         }
@@ -61,11 +61,11 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         super.onResume();
 
         checkForPackageAvailable();
-        EasyCustomTabs.getInstance().connectTo(this);
+        SimpleChromeCustomTabs.getInstance().connectTo(this);
     }
 
     private void checkForPackageAvailable() {
-        EasyCustomTabs.getInstance().findBestPackage(packageFoundCallback);
+        SimpleChromeCustomTabs.getInstance().findBestPackage(packageFoundCallback);
     }
 
     private final PackageFoundCallback packageFoundCallback = new PackageFoundCallback() {
@@ -84,7 +84,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        EasyCustomTabs.getInstance().disconnectFrom(this);
+        SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
 
         super.onPause();
     }

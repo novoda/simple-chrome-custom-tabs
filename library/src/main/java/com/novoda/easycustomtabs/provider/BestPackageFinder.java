@@ -9,7 +9,7 @@ import android.support.annotation.WorkerThread;
 import android.support.customtabs.CustomTabsService;
 import android.text.TextUtils;
 
-import com.novoda.easycustomtabs.EasyCustomTabs;
+import com.novoda.easycustomtabs.SimpleChromeCustomTabs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ class BestPackageFinder {
     }
 
     public static BestPackageFinder newInstance() {
-        Context context = EasyCustomTabs.getInstance().getContext();
+        Context context = SimpleChromeCustomTabs.getInstance().getContext();
         PackageManager packageManager = context.getPackageManager();
         return new BestPackageFinder(packageManager);
     }

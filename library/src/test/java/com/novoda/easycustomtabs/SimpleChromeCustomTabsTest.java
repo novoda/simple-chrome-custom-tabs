@@ -10,18 +10,18 @@ import org.robolectric.RobolectricTestRunner;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
-public class EasyCustomTabsTest {
+public class SimpleChromeCustomTabsTest {
 
     @Test(expected = DeveloperError.class)
     public void getInstanceThrowsDeveloperErrorIfNotInitialized() {
-        EasyCustomTabs.getInstance();
+        SimpleChromeCustomTabs.getInstance();
     }
 
     @Test
     public void getInstanceReturnsIfInitialized() {
-        EasyCustomTabs.initialize(Robolectric.application);
+        SimpleChromeCustomTabs.initialize(Robolectric.application);
 
-        assertThat(EasyCustomTabs.getInstance()).isInstanceOf(EasyCustomTabs.class);
+        assertThat(SimpleChromeCustomTabs.getInstance()).isInstanceOf(SimpleChromeCustomTabs.class);
     }
 
 }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.easycustomtabs.EasyCustomTabs;
+import com.novoda.easycustomtabs.SimpleChromeCustomTabs;
 import com.novoda.easycustomtabs.connection.Connection;
 
 public class EasyCustomTabsNavigator implements Navigator {
@@ -18,7 +18,7 @@ public class EasyCustomTabsNavigator implements Navigator {
     }
 
     public static EasyCustomTabsNavigator newInstance() {
-        Connection connection = EasyCustomTabs.getInstance();
+        Connection connection = SimpleChromeCustomTabs.getInstance();
         return new EasyCustomTabsNavigator(connection);
     }
 

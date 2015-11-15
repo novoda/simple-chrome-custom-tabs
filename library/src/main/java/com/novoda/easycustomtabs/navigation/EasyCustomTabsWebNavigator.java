@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.easycustomtabs.EasyCustomTabs;
+import com.novoda.easycustomtabs.SimpleChromeCustomTabs;
 import com.novoda.easycustomtabs.connection.Connection;
 
 public class EasyCustomTabsWebNavigator implements WebNavigator {
@@ -18,7 +18,7 @@ public class EasyCustomTabsWebNavigator implements WebNavigator {
     }
 
     public static EasyCustomTabsWebNavigator newInstance() {
-        Connection connection = EasyCustomTabs.getInstance();
+        Connection connection = SimpleChromeCustomTabs.getInstance();
         return new EasyCustomTabsWebNavigator(connection);
     }
 
