@@ -2,8 +2,8 @@ def sourceSetMain = android.sourceSets.main.java.srcDirs
 def rulesDir = new File("$project.rootDir/code-quality", 'rules')
 def ignoreFail = true // sad panda
 
-def includeSrcPatternApplication = 'com/novoda/easycustomtabs/**/*.java'
-def excludeSrcPatternRClass = 'com/novoda/easycustomtabs/**/R.java'
+def includeSrcPatternApplication = 'com/novoda/simplechromecustomtabs/**/*.java'
+def excludeSrcPatternRClass = 'com/novoda/simplechromecustomtabs/**/R.java'
 def excludeSrcPatternGeneratedFiles = '**/gen/**'
 
 apply plugin: 'pmd'
