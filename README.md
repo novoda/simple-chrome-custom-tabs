@@ -1,4 +1,4 @@
-# SimpleChromeCustomTabs [![](https://ci.novoda.com/buildStatus/icon?job=simplechromecustomtabs)]() [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)]()
+# SimpleChromeCustomTabs [![](https://ci.novoda.com/buildStatus/icon?job=simplechromecustomtabs)](https://ci.novoda.com/job/simplechromecustomtabs/lastBuild/console) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
 
 
 - Navigating to external websites from your app? 
@@ -66,14 +66,25 @@ public void onPause() {
 
 ```java
 Uri url = ANY_WEBSITE_URL;
-SimpleChromeCustomTabs.getInstance().navigateTo(url, activity);
+NavigationFallback fallback = ANY_FALLBACK_MECHANISM; //In case something goes wrong.
+IntentCustomizer customizer = ANY_INTENT_CUSTOMIZER; //To theme your tab.
+
+SimpleChromeCustomTabs.getInstance().withNavigationFallback(fallback)
+    .withIntentCustomizer(customizer)
+    .navigateTo(url, activity);
 ```
 
-**TODO**: Add screenshot.
+
+**And voilà!!**
+
+[![screnshot](https://github.com/novoda/simplechromecustomtabs/blob/master/art/art.png)]()
+
+**Note**: 
+Check the [extended demo](https://github.com/novoda/simplechromecustomtabs/tree/master/demo-extended) for further usage examples.
 
 ## Links
 
 Here are a list of useful links:
 
  * We always welcome people to contribute new features or bug fixes, [here is how](https://github.com/novoda/novoda/blob/master/CONTRIBUTING.md)
- * If you have a problem check the [Issues Page](https://github.com/novoda/simplechromecustomtabs/issues) first to see if we are working on it
+ * If you have a problem or you feel that important functionality is missing check the [Issues Page](https://github.com/novoda/simplechromecustomtabs/issues) first to see if we are working on it
