@@ -2,6 +2,7 @@ package com.novoda.simplechromecustomtabs.demo;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
@@ -43,6 +45,8 @@ public class ExtendedDemoActivity extends AppCompatActivity {
     private final NavigationFallback navigationFallback = new NavigationFallback() {
         @Override
         public void onFallbackNavigateTo(Uri url) {
+            Toast.makeText(getApplicationContext(), R.string.application_not_found, Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setData(url)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -57,13 +61,21 @@ public class ExtendedDemoActivity extends AppCompatActivity {
             return simpleChromeCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
                     .showingTitle()
                     .withUrlBarHiding()
-                    .withActionButton(
-                            BitmapFactory.decodeResource
-                                    (getResources(), android.R.drawable.ic_menu_mapmode), getString(R.string.novoda_london), navigateToNovodaLondon(), false
-                    )
-                    .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode());
+                    .withCloseButtonIcon(decodeCloseBitmap())
+                    .withActionButton(decodeMapBitmap(), getString(R.string.novoda_london), navigateToNovodaLondon(), false)
+                    .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode())
+                    .withExitAnimations(getApplicationContext(), android.R.anim.slide_in_left, android.R.anim.fade_out)
+                    .withStartAnimations(getApplicationContext(), android.R.anim.fade_in, android.R.anim.slide_out_right);
         }
     };
+
+    private Bitmap decodeMapBitmap() {
+        return BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_mapmode);
+    }
+
+    private Bitmap decodeCloseBitmap() {
+        return BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back);
+    }
 
     private PendingIntent navigateToNovodaLondon() {
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:51.5411671,-0.0947801"));
