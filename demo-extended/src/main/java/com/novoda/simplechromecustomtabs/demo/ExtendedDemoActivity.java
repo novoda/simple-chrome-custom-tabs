@@ -57,7 +57,6 @@ public class ExtendedDemoActivity extends AppCompatActivity {
     private final IntentCustomizer intentCustomizer = new IntentCustomizer() {
         @Override
         public SimpleChromeCustomTabsIntentBuilder onCustomiseIntent(SimpleChromeCustomTabsIntentBuilder simpleChromeCustomTabsIntentBuilder) {
-            //TODO customize a bit more.
             return simpleChromeCustomTabsIntentBuilder.withToolbarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black))
                     .showingTitle()
                     .withUrlBarHiding()
