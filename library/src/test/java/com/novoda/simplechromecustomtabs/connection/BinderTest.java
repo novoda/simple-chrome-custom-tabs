@@ -25,6 +25,8 @@ public class BinderTest {
     @Mock
     private Activity mockActivity;
     @Mock
+    private ServiceConnectionCallback mockServiceConnectionCallback;
+    @Mock
     private AvailableAppProvider mockAvailableAppProvider;
     @Captor
     private ArgumentCaptor<SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback> packageFoundCallbackCaptor;
@@ -50,14 +52,14 @@ public class BinderTest {
     public void doesNotBindActivityToServiceIfAlreadyBound() {
         givenThatActivityIsAlreadyBound();
 
-        binder.bindCustomTabsServiceTo(mockActivity);
+        binder.bindCustomTabsServiceTo(mockActivity, mockServiceConnectionCallback);
 
         verifyNoMoreInteractions(mockActivity);
     }
 
     @Test
     public void doesNotBindActivityToServiceIfPackageNotAvailable() {
-        binder.bindCustomTabsServiceTo(mockActivity);
+        binder.bindCustomTabsServiceTo(mockActivity, mockServiceConnectionCallback);
 
         verifyNoMoreInteractions(mockActivity);
     }
@@ -79,7 +81,7 @@ public class BinderTest {
     }
 
     private void bindService() {
-        binder.bindCustomTabsServiceTo(mockActivity);
+        binder.bindCustomTabsServiceTo(mockActivity, mockServiceConnectionCallback);
     }
 
     private void givenThatActivityIsAlreadyBound() {
