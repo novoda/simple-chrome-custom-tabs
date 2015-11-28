@@ -39,7 +39,7 @@ class Binder {
 
                     @Override
                     public void onPackageNotFound() {
-                        //no-op
+                        serviceConnection = null;
                     }
                 }
         );
