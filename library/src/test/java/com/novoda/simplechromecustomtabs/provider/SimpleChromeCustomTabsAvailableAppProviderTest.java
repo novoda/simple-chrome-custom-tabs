@@ -9,8 +9,8 @@ import org.robolectric.RobolectricTestRunner;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
@@ -30,7 +30,6 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
         initMocks(this);
 
         simpleChromeCustomTabsAvailableAppProvider = new SimpleChromeCustomTabsAvailableAppProvider(createObservable(), mockBestPackageFinder);
-
     }
 
     private Observable<String> createObservable() {
@@ -57,20 +56,46 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
 
     @Test
     public void packageIsNotFoundIfNull() {
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
-
         when(mockBestPackageFinder.findBestPackage()).thenReturn(null);
+
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
 
         verify(mockPackageFoundCallback).onPackageNotFound();
     }
 
     @Test
     public void packageNotFoundIfEmpty() {
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
-
         when(mockBestPackageFinder.findBestPackage()).thenReturn("");
 
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+
         verify(mockPackageFoundCallback).onPackageNotFound();
+    }
+
+    @Test
+    public void ifPackageIsFoundThenPackageNotFoundWillNotBeCalled() {
+        givenThatPackageIsFound();
+
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+
+        verify(mockPackageFoundCallback, never()).onPackageNotFound();
+    }
+
+    @Test
+    public void ifPackageIsNotFoundThenPackageFoundWillNotBeCalled() {
+        givenThatPackageIsNotFound();
+
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+
+        verify(mockPackageFoundCallback, never()).onPackageFound(anyString());
+    }
+
+    private void givenThatPackageIsFound() {
+        when(mockBestPackageFinder.findBestPackage()).thenReturn(NON_EMPTY_PACKAGE);
+    }
+
+    private void givenThatPackageIsNotFound() {
+        when(mockBestPackageFinder.findBestPackage()).thenReturn("");
     }
 
 }
