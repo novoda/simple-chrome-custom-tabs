@@ -66,10 +66,9 @@ public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppP
             public void onNext(String packageName) {
                 if (TextUtils.isEmpty(packageName)) {
                     packageFoundCallback.onPackageNotFound();
-                    return;
+                } else {
+                    packageFoundCallback.onPackageFound(packageName);
                 }
-
-                packageFoundCallback.onPackageFound(packageName);
             }
         };
     }
