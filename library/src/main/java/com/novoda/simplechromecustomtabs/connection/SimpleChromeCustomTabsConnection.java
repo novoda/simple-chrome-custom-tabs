@@ -31,8 +31,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     @Override
     public void connectTo(@NonNull Activity activity) {
-        binder.setServiceConnectionCallback(this);
-        binder.bindCustomTabsServiceTo(activity);
+        binder.bindCustomTabsServiceTo(activity, this);
     }
 
     @Override

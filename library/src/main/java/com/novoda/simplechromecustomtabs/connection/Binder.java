@@ -14,7 +14,6 @@ class Binder {
 
     private final AvailableAppProvider availableAppProvider;
     private ServiceConnection serviceConnection;
-    private ServiceConnectionCallback serviceConnectionCallback;
 
     Binder(@NonNull AvailableAppProvider availableAppProvider) {
         this.availableAppProvider = availableAppProvider;
@@ -25,12 +24,12 @@ class Binder {
         return new Binder(availableAppProvider);
     }
 
-    public void bindCustomTabsServiceTo(@NonNull final Activity activity) {
+    public void bindCustomTabsServiceTo(@NonNull final Activity activity, ServiceConnectionCallback callback) {
         if (isConnected()) {
             return;
         }
 
-        serviceConnection = new ServiceConnection(serviceConnectionCallback);
+        serviceConnection = new ServiceConnection(callback);
         availableAppProvider.findBestPackage(
                 new SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback() {
                     @Override
@@ -40,7 +39,7 @@ class Binder {
 
                     @Override
                     public void onPackageNotFound() {
-                        //no-op
+                        serviceConnection = null;
                     }
                 }
         );
@@ -48,10 +47,6 @@ class Binder {
 
     private boolean isConnected() {
         return serviceConnection != null;
-    }
-
-    public void setServiceConnectionCallback(ServiceConnectionCallback serviceConnectionCallback) {
-        this.serviceConnectionCallback = serviceConnectionCallback;
     }
 
     public void unbindCustomTabsService(@NonNull Activity activity) {

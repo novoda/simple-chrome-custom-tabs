@@ -32,7 +32,7 @@ public class SimpleChromeCustomTabsConnectionTest {
     public void connectToBindsActivityToService() {
         simpleChromeCustomTabsConnection.connectTo(mockActivity);
 
-        verify(mockBinder).bindCustomTabsServiceTo(mockActivity);
+        verify(mockBinder).bindCustomTabsServiceTo(mockActivity, simpleChromeCustomTabsConnection);
     }
 
     @Test
