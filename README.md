@@ -77,8 +77,6 @@ SimpleChromeCustomTabs.getInstance().withNavigationFallback(fallback)
 
 **And voilà!!**
 
-[![screnshot](https://github.com/novoda/simplechromecustomtabs/blob/master/art/art.png)]()
-
 External Browser | SimpleChromeCustomTabs
 --- | ---
 ![external_browser](https://github.com/novoda/simplechromecustomtabs/blob/master/art/external_browser.gif) | ![simplechromecustomtabs](https://github.com/novoda/simplechromecustomtabs/blob/master/art/simplechromecustomtabs.gif)
