@@ -1,8 +1,5 @@
 package com.novoda.simplechromecustomtabs.provider;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import java.util.concurrent.Executor;
 
 import org.junit.Before;
@@ -107,11 +104,9 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     }
 
     private static class StubExecutor implements Executor {
-        private final Handler mHandler = new Handler(Looper.getMainLooper());
-
         @Override
         public void execute(Runnable command) {
-            mHandler.post(command);
+            command.run();
         }
     }
 
