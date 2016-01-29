@@ -4,66 +4,37 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppProvider {
 
-    private final Observable<String> observable;
     private final BestPackageFinder bestPackageFinder;
+    private final Executor executor;
 
-    SimpleChromeCustomTabsAvailableAppProvider(Observable<String> observable, BestPackageFinder bestPackageFinder) {
-        this.observable = observable;
+    SimpleChromeCustomTabsAvailableAppProvider(BestPackageFinder bestPackageFinder, Executor executor) {
         this.bestPackageFinder = bestPackageFinder;
+        this.executor = executor;
     }
 
     public static SimpleChromeCustomTabsAvailableAppProvider newInstance() {
         BestPackageFinder bestPackageFinder = BestPackageFinder.newInstance();
-        return new SimpleChromeCustomTabsAvailableAppProvider(createObservable(), bestPackageFinder);
-    }
-
-    private static Observable<String> createObservable() {
-        return Observable.<String>empty()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io());
+        Executor executor = Executors.newSingleThreadExecutor();
+        return new SimpleChromeCustomTabsAvailableAppProvider(bestPackageFinder, executor);
     }
 
     @Override
     @WorkerThread
-    public void findBestPackage(@NonNull PackageFoundCallback packageFoundCallback) {
-        observable.mergeWith(findBestPackageObservable())
-                .subscribe(findBestPackageSubscriber(packageFoundCallback));
+    public void findBestPackage(@NonNull final PackageFoundCallback packageFoundCallback) {
+        Runnable findBestPackageTask = findBestPackageTask(packageFoundCallback);
+        executor.execute(findBestPackageTask);
     }
 
-    private Observable<String> findBestPackageObservable() {
-        return Observable.create(
-                new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> subscriber) {
-                        String packageName = bestPackageFinder.findBestPackage();
-                        subscriber.onNext(packageName);
-                        subscriber.onCompleted();
-                    }
-                }
-        );
-    }
-
-    private Subscriber<String> findBestPackageSubscriber(final PackageFoundCallback packageFoundCallback) {
-        return new Subscriber<String>() {
+    private Runnable findBestPackageTask(final PackageFoundCallback packageFoundCallback) {
+        return new Runnable() {
             @Override
-            public void onCompleted() {
-                //no-op
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                packageFoundCallback.onPackageNotFound();
-            }
-
-            @Override
-            public void onNext(String packageName) {
+            public void run() {
+                String packageName = bestPackageFinder.findBestPackage();
                 if (TextUtils.isEmpty(packageName)) {
                     packageFoundCallback.onPackageNotFound();
                     return;
