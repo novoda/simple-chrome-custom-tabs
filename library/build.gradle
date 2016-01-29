@@ -24,8 +24,6 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:customtabs:23.1.0'
-    compile 'io.reactivex:rxjava:1.0.8'
-    compile 'io.reactivex:rxandroid:0.23.0'
     compile 'com.novoda:notils:2.2.13'
 
     testCompile 'junit:junit:4.12'
