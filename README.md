@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.novoda:simple-chrome-custom-tabs:0.0.1'
+    compile 'com.novoda:simple-chrome-custom-tabs:0.1.1'
 }
 ```    
 
@@ -77,7 +77,9 @@ SimpleChromeCustomTabs.getInstance().withNavigationFallback(fallback)
 
 **And voilà!!**
 
-[![screnshot](https://github.com/novoda/simplechromecustomtabs/blob/master/art/art.png)]()
+External Browser | SimpleChromeCustomTabs
+--- | ---
+![external_browser](https://github.com/novoda/simplechromecustomtabs/blob/master/art/external_browser.gif) | ![simplechromecustomtabs](https://github.com/novoda/simplechromecustomtabs/blob/master/art/simplechromecustomtabs.gif)
 
 **Note**: 
 Check the [extended demo](https://github.com/novoda/simplechromecustomtabs/tree/master/demo-extended) for further usage examples.
