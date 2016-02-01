@@ -1,13 +1,12 @@
 package com.novoda.simplechromecustomtabs.provider;
 
+import java.util.concurrent.Executor;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -29,13 +28,7 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     public void setUp() {
         initMocks(this);
 
-        simpleChromeCustomTabsAvailableAppProvider = new SimpleChromeCustomTabsAvailableAppProvider(createObservable(), mockBestPackageFinder);
-    }
-
-    private Observable<String> createObservable() {
-        return Observable.<String>empty()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(AndroidSchedulers.mainThread());
+        simpleChromeCustomTabsAvailableAppProvider = new SimpleChromeCustomTabsAvailableAppProvider(mockBestPackageFinder, new StubExecutor());
     }
 
     @Test
@@ -108,6 +101,13 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
 
     private void givenThatPackageIsNotFound() {
         givenThatPackageIsEmpty();
+    }
+
+    private static class StubExecutor implements Executor {
+        @Override
+        public void execute(Runnable command) {
+            command.run();
+        }
     }
 
 }
