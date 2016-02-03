@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.novoda:simple-chrome-custom-tabs:0.1.1'
+    compile 'com.novoda:simple-chrome-custom-tabs:0.1.2'
 }
 ```    
 
