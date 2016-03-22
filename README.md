@@ -41,14 +41,14 @@ dependencies {
 1) Initialize `SimpleChromeCustomTabs`, you only have to this once.
 
 ```java
-SimpleChromeCustomTabs.initialize(context)
+SimpleChromeCustomTabs.initialize(context);
 ```
 
 2) Connect `SimpleChromeCustomTabs` to your `Activity` as soon as it is resumed.
 
 ```java
 public void onResume() {
-    super.onResume()
+    super.onResume();
     SimpleChromeCustomTabs.getInstance().connectTo(this);
 }
 ```
