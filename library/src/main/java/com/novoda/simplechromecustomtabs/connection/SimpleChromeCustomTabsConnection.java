@@ -68,6 +68,11 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
     }
 
     @Override
+    public boolean isDisconnected() {
+        return !isConnected();
+    }
+
+    @Override
     public void onServiceDisconnected() {
         if (hasConnectedClient()) {
             client.disconnect();
