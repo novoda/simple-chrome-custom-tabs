@@ -5,8 +5,8 @@ import android.content.ComponentName;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsServiceConnection;
+import android.util.Log;
 
-import com.novoda.notils.logger.simple.Log;
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
 import com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider;
@@ -58,7 +58,7 @@ class Binder {
         try {
             activity.unbindService(serviceConnection);
         } catch (IllegalArgumentException iae) {
-            Log.e(iae, "There was a problem unbinding from a CustomTabs service. :/");
+            Log.e("SimpleChromeCustomTabs", "There was a problem unbinding from a CustomTabs service. :/", iae);
         } finally {
             serviceConnection.onServiceDisconnected(null);
             serviceConnection = null;
