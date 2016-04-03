@@ -5,6 +5,7 @@ import android.app.Activity;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.robolectric.Robolectric;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -25,21 +26,23 @@ public class SimpleChromeCustomTabsConnectionTest {
     public void setUp() {
         initMocks(this);
 
+        when(mockActivity.getApplicationContext()).thenReturn(Robolectric.application);
+
         simpleChromeCustomTabsConnection = new SimpleChromeCustomTabsConnection(mockBinder);
     }
 
     @Test
-    public void connectToBindsActivityToService() {
+    public void connectToBindsApplicationContextToService() {
         simpleChromeCustomTabsConnection.connectTo(mockActivity);
 
-        verify(mockBinder).bindCustomTabsServiceTo(mockActivity, simpleChromeCustomTabsConnection);
+        verify(mockBinder).bindCustomTabsServiceTo(mockActivity.getApplicationContext(), simpleChromeCustomTabsConnection);
     }
 
     @Test
-    public void disconnectFromUnbindsActivityFromService() {
+    public void disconnectFromUnbindsApplicationContextFromService() {
         simpleChromeCustomTabsConnection.disconnectFrom(mockActivity);
 
-        verify(mockBinder).unbindCustomTabsService(mockActivity);
+        verify(mockBinder).unbindCustomTabsService(mockActivity.getApplicationContext());
     }
 
     @Test
