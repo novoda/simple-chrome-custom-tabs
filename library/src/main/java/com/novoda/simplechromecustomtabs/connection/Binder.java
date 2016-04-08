@@ -1,10 +1,11 @@
 package com.novoda.simplechromecustomtabs.connection;
 
-import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsServiceConnection;
+import android.util.Log;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
@@ -24,7 +25,7 @@ class Binder {
         return new Binder(availableAppProvider);
     }
 
-    public void bindCustomTabsServiceTo(@NonNull final Activity activity, ServiceConnectionCallback callback) {
+    public void bindCustomTabsServiceTo(@NonNull final Context context, ServiceConnectionCallback callback) {
         if (isConnected()) {
             return;
         }
@@ -34,7 +35,7 @@ class Binder {
                 new SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback() {
                     @Override
                     public void onPackageFound(String packageName) {
-                        CustomTabsClient.bindCustomTabsService(activity, packageName, serviceConnection);
+                        CustomTabsClient.bindCustomTabsService(context, packageName, serviceConnection);
                     }
 
                     @Override
@@ -49,14 +50,19 @@ class Binder {
         return serviceConnection != null;
     }
 
-    public void unbindCustomTabsService(@NonNull Activity activity) {
+    public void unbindCustomTabsService(@NonNull Context context) {
         if (isDisconnected()) {
             return;
         }
 
-        activity.unbindService(serviceConnection);
-        serviceConnection.onServiceDisconnected(null);
-        serviceConnection = null;
+        try {
+            context.unbindService(serviceConnection);
+        } catch (IllegalArgumentException iae) {
+            Log.e("SimpleChromeCustomTabs", "There was a problem unbinding from a CustomTabs service. :/", iae);
+        } finally {
+            serviceConnection.onServiceDisconnected(null);
+            serviceConnection = null;
+        }
     }
 
     private boolean isDisconnected() {

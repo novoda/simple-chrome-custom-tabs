@@ -74,7 +74,7 @@ public class SimpleChromeCustomTabsIntentBuilder {
      * TODO Allow intent creation without connection. Might be useful to re-customise a current session.
      */
     public CustomTabsIntent createIntent() {
-        if (!connection.isConnected()) {
+        if (connection.isDisconnected()) {
             throw new DeveloperError("An active connection to custom tabs service is required for intent creation");
         }
 

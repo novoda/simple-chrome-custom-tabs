@@ -31,7 +31,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     @Override
     public void connectTo(@NonNull Activity activity) {
-        binder.bindCustomTabsServiceTo(activity, this);
+        binder.bindCustomTabsServiceTo(activity.getApplicationContext(), this);
     }
 
     @Override
@@ -64,7 +64,12 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     @Override
     public void disconnectFrom(@NonNull Activity activity) {
-        binder.unbindCustomTabsService(activity);
+        binder.unbindCustomTabsService(activity.getApplicationContext());
+    }
+
+    @Override
+    public boolean isDisconnected() {
+        return !isConnected();
     }
 
     @Override

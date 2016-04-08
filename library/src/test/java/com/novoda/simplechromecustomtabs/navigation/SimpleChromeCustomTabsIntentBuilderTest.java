@@ -126,7 +126,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     }
 
     private void givenIsDisconnected() {
-        when(mockSimpleChromeCustomTabsConnection.isConnected()).thenReturn(false);
+        when(mockSimpleChromeCustomTabsConnection.isDisconnected()).thenReturn(true);
     }
 
     private void givenIsConnected() {
