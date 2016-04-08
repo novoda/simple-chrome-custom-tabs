@@ -14,4 +14,6 @@ public interface Connection {
 
     void disconnectFrom(@NonNull Activity activity);
 
+    boolean isDisconnected();
+
 }

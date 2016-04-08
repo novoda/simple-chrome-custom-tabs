@@ -98,7 +98,9 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
      */
     @Override
     public void connectTo(@NonNull Activity activity) {
-        connection.connectTo(activity);
+        if (isDisconnected()) {
+            connection.connectTo(activity);
+        }
     }
 
     @Override
@@ -120,7 +122,14 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     @Override
     public void disconnectFrom(@NonNull Activity activity) {
-        connection.disconnectFrom(activity);
+        if (isConnected()) {
+            connection.disconnectFrom(activity);
+        }
+    }
+
+    @Override
+    public boolean isDisconnected() {
+        return !isConnected();
     }
 
     /**
