@@ -10,12 +10,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
-import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
 
 import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
 
@@ -31,6 +32,9 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
         setContentView(R.layout.simple_demo_layout);
         findViewById(R.id.open_url_button).setOnClickListener(openUrlButtonClickListener);
+
+        TextView textView = (TextView) findViewById(R.id.linkified_text_view);
+        LinkifyWithCustomTabs.addLinks(textView, navigationFallback, intentCustomizer, this);
     }
 
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {
