@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +22,8 @@ import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
+
+import java.util.List;
 
 import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
 
@@ -34,8 +41,42 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         findViewById(R.id.open_url_button).setOnClickListener(openUrlButtonClickListener);
 
         TextView textView = (TextView) findViewById(R.id.linkified_text_view);
-        LinkifyWithCustomTabs.addLinks(textView, navigationFallback, intentCustomizer, this);
+
+        CharSequence textViewText = textView.getText();
+        Spannable spannable1;
+        if (textViewText instanceof Spannable) {
+            spannable1 = (Spannable) textViewText;
+        } else {
+            spannable1 = SpannableString.valueOf(textViewText);
+        }
+        Spannable spannable = spannable1;
+        final URLSpan[] urlSpans = spannable.getSpans(0, spannable.length(), URLSpan.class);
+        for (URLSpan urlSpan1 : urlSpans) {
+            spannable.removeSpan(urlSpan1);
+        }
+
+        List<MatchedUrl> urls = new UrlFinder().findUrlsIn(spannable);
+        final UrlSpanFactory urlSpanFactory = new UrlSpanFactory(onWebLinkClickedListener);
+        for (final MatchedUrl matchedUrl : urls) {
+            int start = matchedUrl.start;
+            int end = matchedUrl.end;
+            final String url = matchedUrl.url;
+            URLSpan urlSpan = urlSpanFactory.createSpan(url);
+            spannable.setSpan(urlSpan, start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        textView.setText(spannable);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
+    private final UrlSpanFactory.OnWebLinkClickedListener onWebLinkClickedListener = new UrlSpanFactory.OnWebLinkClickedListener() {
+        @Override
+        public void onClick(Uri url) {
+            SimpleChromeCustomTabs.getInstance()
+                    .withFallback(navigationFallback)
+                    .withIntentCustomizer(intentCustomizer)
+                    .navigateTo(url, ExtendedDemoActivity.this);
+        }
+    };
 
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {
         @Override
