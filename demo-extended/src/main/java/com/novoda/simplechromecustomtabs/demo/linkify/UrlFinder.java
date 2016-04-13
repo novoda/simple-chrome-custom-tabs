@@ -10,10 +10,18 @@ class UrlFinder {
 
     List<MatchedUrl> findUrlsIn(CharSequence charSequence) {
         List<MatchedUrl> urls = new ArrayList<>();
+        if (isEmpty(charSequence)) {
+            return urls;
+        }
+
         Matcher matcher = Patterns.WEB_URL.matcher(charSequence);
         while (matcher.find()) {
             urls.add(new MatchedUrl(matcher.group(), matcher.start(), matcher.end()));
         }
         return urls;
+    }
+
+    private boolean isEmpty(CharSequence charSequence) {
+        return charSequence == null || charSequence.length() == 0;
     }
 }
