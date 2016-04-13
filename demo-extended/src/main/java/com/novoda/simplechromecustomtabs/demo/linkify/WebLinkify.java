@@ -28,7 +28,7 @@ public final class WebLinkify {
         UrlSpanFactory urlSpanFactory = new UrlSpanFactory(listener);
 
         for (MatchedUrl matchedUrl : urls) {
-            URLSpan urlSpan = urlSpanFactory.createSpan(matchedUrl.url);
+            URLSpan urlSpan = urlSpanFactory.createSpanFor(matchedUrl.url);
             spannable.setSpan(urlSpan, matchedUrl.start, matchedUrl.end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         textView.setText(spannable);
