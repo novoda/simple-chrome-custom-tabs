@@ -9,14 +9,23 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public final class SimpleChromeCustomTabsLinkifier {
+/**
+ * A custom version of {@link android.text.util.Linkify} which allows the user to set their own listener for when any of the Web links has been clicked
+ */
+public final class WebLinkify {
 
-    public static void linkify(TextView textView, OnWebLinkClickedListener onWebLinkClickedListener) {
+    /**
+     * Converts all Web links in the text of the given TextView into clickable {@link URLSpan}s. If the given TextView contains no links, this does nothing
+     * <p>If the TextView already contains URLSpans they will be replaced</p>
+     *
+     * @param listener The listener that is being called when the URL has been clicked
+     */
+    public static void addLinks(TextView textView, OnWebLinkClickedListener listener) {
         Spannable spannable = getSpannableTextOf(textView);
         removeAllUrlSpansFrom(spannable);
 
         List<MatchedUrl> urls = new UrlFinder().findUrlsIn(spannable);
-        UrlSpanFactory urlSpanFactory = new UrlSpanFactory(onWebLinkClickedListener);
+        UrlSpanFactory urlSpanFactory = new UrlSpanFactory(listener);
 
         for (MatchedUrl matchedUrl : urls) {
             URLSpan urlSpan = urlSpanFactory.createSpan(matchedUrl.url);
@@ -29,6 +38,8 @@ public final class SimpleChromeCustomTabsLinkifier {
     }
 
     private static void removeAllUrlSpansFrom(Spannable spannable) {
+        // The Spannable might already have some URLSpans set on it.
+        // Make sure to remove them so that we can replace them with our own
         final URLSpan[] urlSpans = spannable.getSpans(0, spannable.length(), URLSpan.class);
         for (URLSpan urlSpan1 : urlSpans) {
             spannable.removeSpan(urlSpan1);

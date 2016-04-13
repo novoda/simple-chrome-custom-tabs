@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.demo.linkify.OnWebLinkClickedListener;
-import com.novoda.simplechromecustomtabs.demo.linkify.SimpleChromeCustomTabsLinkifier;
+import com.novoda.simplechromecustomtabs.demo.linkify.WebLinkify;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
@@ -36,7 +36,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         findViewById(R.id.open_url_button).setOnClickListener(openUrlButtonClickListener);
 
         TextView textView = (TextView) findViewById(R.id.open_url_link);
-        SimpleChromeCustomTabsLinkifier.linkify(textView, onWebLinkClickedListener);
+        WebLinkify.addLinks(textView, onWebLinkClickedListener);
     }
 
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {
