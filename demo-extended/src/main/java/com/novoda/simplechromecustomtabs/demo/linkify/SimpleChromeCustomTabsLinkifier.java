@@ -1,4 +1,4 @@
-package com.novoda.simplechromecustomtabs.demo;
+package com.novoda.simplechromecustomtabs.demo.linkify;
 
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public final class SimpleChromeCustomTabsLinkifier {
 
-    public static void linkify(TextView textView, UrlSpanFactory.OnWebLinkClickedListener onWebLinkClickedListener) {
+    public static void linkify(TextView textView, OnWebLinkClickedListener onWebLinkClickedListener) {
         Spannable spannable = getSpannableTextOf(textView);
         removeAllUrlSpansFrom(spannable);
 

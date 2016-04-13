@@ -1,4 +1,4 @@
-package com.novoda.simplechromecustomtabs.demo;
+package com.novoda.simplechromecustomtabs.demo.linkify;
 
 class MatchedUrl {
 

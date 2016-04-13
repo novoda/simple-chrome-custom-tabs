@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
+import com.novoda.simplechromecustomtabs.demo.linkify.OnWebLinkClickedListener;
+import com.novoda.simplechromecustomtabs.demo.linkify.SimpleChromeCustomTabsLinkifier;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
@@ -33,7 +35,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         setContentView(R.layout.simple_demo_layout);
         findViewById(R.id.open_url_button).setOnClickListener(openUrlButtonClickListener);
 
-        TextView textView = (TextView) findViewById(R.id.linkified_text_view);
+        TextView textView = (TextView) findViewById(R.id.open_url_link);
         SimpleChromeCustomTabsLinkifier.linkify(textView, onWebLinkClickedListener);
     }
 
@@ -46,11 +48,10 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         }
     };
 
-    private final UrlSpanFactory.OnWebLinkClickedListener onWebLinkClickedListener = new UrlSpanFactory.OnWebLinkClickedListener() {
+    private final OnWebLinkClickedListener onWebLinkClickedListener = new OnWebLinkClickedListener() {
         @Override
         public void onClick(Uri uri) {
-            SimpleChromeCustomTabs.getInstance()
-                    .withFallback(navigationFallback)
+            SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
                     .withIntentCustomizer(intentCustomizer)
                     .navigateTo(uri, ExtendedDemoActivity.this);
         }

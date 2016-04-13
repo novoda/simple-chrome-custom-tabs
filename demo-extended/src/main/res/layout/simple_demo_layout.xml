@@ -17,9 +17,10 @@
     android:text="Open website" />
 
   <TextView
-    android:id="@+id/linkified_text_view"
+    android:id="@+id/open_url_link"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="http://www.novoda.com ||| http://www.google.com" />
+    android:layout_margin="12dp"
+    android:text="Check the repo @ https://github.com/novoda/simple-chrome-custom-tabs" />
 
 </LinearLayout>

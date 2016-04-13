@@ -1,4 +1,4 @@
-package com.novoda.simplechromecustomtabs.demo;
+package com.novoda.simplechromecustomtabs.demo.linkify;
 
 import android.net.Uri;
 import android.text.style.URLSpan;
@@ -22,7 +22,4 @@ class UrlSpanFactory {
         };
     }
 
-    interface OnWebLinkClickedListener {
-        void onClick(Uri url);
-    }
 }
