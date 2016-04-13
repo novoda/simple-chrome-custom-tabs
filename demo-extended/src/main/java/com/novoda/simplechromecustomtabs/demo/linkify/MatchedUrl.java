@@ -40,4 +40,13 @@ class MatchedUrl {
         result = 31 * result + end;
         return result;
     }
+
+    @Override
+    public String  toString() {
+        return "MatchedUrl{" +
+                "url='" + url + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
+    }
 }
