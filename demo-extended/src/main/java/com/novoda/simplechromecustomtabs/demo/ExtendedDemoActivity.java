@@ -34,7 +34,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         findViewById(R.id.open_url_button).setOnClickListener(openUrlButtonClickListener);
 
         TextView textView = (TextView) findViewById(R.id.linkified_text_view);
-        CustomTabsLinkifier.linkify(textView, onWebLinkClickedListener);
+        SimpleChromeCustomTabsLinkifier.linkify(textView, onWebLinkClickedListener);
     }
 
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {

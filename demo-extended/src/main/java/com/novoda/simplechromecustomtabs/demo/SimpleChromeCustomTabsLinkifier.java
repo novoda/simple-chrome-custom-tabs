@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public final class CustomTabsLinkifier {
+public final class SimpleChromeCustomTabsLinkifier {
 
     public static void linkify(TextView textView, UrlSpanFactory.OnWebLinkClickedListener onWebLinkClickedListener) {
         Spannable spannable = getSpannableTextOf(textView);
