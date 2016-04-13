@@ -41,8 +41,8 @@ public final class WebLinkify {
         // The Spannable might already have some URLSpans set on it.
         // Make sure to remove them so that we can replace them with our own
         final URLSpan[] urlSpans = spannable.getSpans(0, spannable.length(), URLSpan.class);
-        for (URLSpan urlSpan1 : urlSpans) {
-            spannable.removeSpan(urlSpan1);
+        for (URLSpan urlSpan : urlSpans) {
+            spannable.removeSpan(urlSpan);
         }
     }
 
