@@ -1,5 +1,6 @@
 package com.novoda.simplechromecustomtabs.demo.linkify;
 
+import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,7 +21,7 @@ public final class WebLinkify {
      *
      * @param listener The listener that is being called when the URL has been clicked
      */
-    public static void addLinks(TextView textView, OnWebLinkClickedListener listener) {
+    public static void addLinks(@NonNull TextView textView, @NonNull OnWebLinkClickedListener listener) {
         Spannable spannable = getSpannableTextOf(textView);
         removeAllUrlSpansFrom(spannable);
 
