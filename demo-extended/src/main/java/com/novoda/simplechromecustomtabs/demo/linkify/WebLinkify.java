@@ -1,5 +1,6 @@
 package com.novoda.simplechromecustomtabs.demo.linkify;
 
+import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,7 +21,7 @@ public final class WebLinkify {
      *
      * @param listener The listener that is being called when the URL has been clicked
      */
-    public static void addLinks(TextView textView, OnWebLinkClickedListener listener) {
+    public static void addLinks(@NonNull TextView textView, @NonNull OnWebLinkClickedListener listener) {
         Spannable spannable = getSpannableTextOf(textView);
         removeAllUrlSpansFrom(spannable);
 
@@ -28,7 +29,7 @@ public final class WebLinkify {
         UrlSpanFactory urlSpanFactory = new UrlSpanFactory(listener);
 
         for (MatchedUrl matchedUrl : urls) {
-            URLSpan urlSpan = urlSpanFactory.createSpan(matchedUrl.url);
+            URLSpan urlSpan = urlSpanFactory.createSpanFor(matchedUrl.url);
             spannable.setSpan(urlSpan, matchedUrl.start, matchedUrl.end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         textView.setText(spannable);
@@ -41,8 +42,8 @@ public final class WebLinkify {
         // The Spannable might already have some URLSpans set on it.
         // Make sure to remove them so that we can replace them with our own
         final URLSpan[] urlSpans = spannable.getSpans(0, spannable.length(), URLSpan.class);
-        for (URLSpan urlSpan1 : urlSpans) {
-            spannable.removeSpan(urlSpan1);
+        for (URLSpan urlSpan : urlSpans) {
+            spannable.removeSpan(urlSpan);
         }
     }
 

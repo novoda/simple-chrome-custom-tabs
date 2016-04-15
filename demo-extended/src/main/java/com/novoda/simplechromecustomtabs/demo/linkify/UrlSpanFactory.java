@@ -12,8 +12,8 @@ class UrlSpanFactory {
         this.onWebLinkClickedListener = onWebLinkClickedListener;
     }
 
-    URLSpan createSpan(final String url) {
-        return new URLSpan(url) {
+    URLSpan createSpanFor(final String webLinkUrl) {
+        return new URLSpan(webLinkUrl) {
             @Override
             public void onClick(View widget) {
                 Uri spanUrl = Uri.parse(getURL());
