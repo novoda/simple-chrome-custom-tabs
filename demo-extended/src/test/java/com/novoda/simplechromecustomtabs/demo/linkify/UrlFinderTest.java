@@ -9,7 +9,16 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class UrlFinderTest {
 
-    Pattern testPattern = Pattern.compile("^(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$");
+    Pattern testPattern = Pattern.compile("\\b(((ht|f)tp(s?)\\:\\/\\/|~\\/|\\/)|www.)" +
+            "(\\w+:\\w+@)?(([-\\w]+\\.)+(com|org|net|gov" +
+            "|mil|biz|info|mobi|name|aero|jobs|museum" +
+            "|travel|[a-z]{2}))(:[\\d]{1,5})?" +
+            "(((\\/([-\\w~!$+|.,=]|%[a-f\\d]{2})+)+|\\/)+|\\?|#)?" +
+            "((\\?([-\\w~!$+|.,*:]|%[a-f\\d{2}])+=?" +
+            "([-\\w~!$+|.,*:=]|%[a-f\\d]{2})*)" +
+            "(&(?:[-\\w~!$+|.,*:]|%[a-f\\d{2}])+=?" +
+            "([-\\w~!$+|.,*:=]|%[a-f\\d]{2})*)*)*" +
+            "(#([-\\w~!$+|.,*:=]|%[a-f\\d]{2})*)?\\b");
 
     private UrlFinder finder = new UrlFinder(testPattern);
 
