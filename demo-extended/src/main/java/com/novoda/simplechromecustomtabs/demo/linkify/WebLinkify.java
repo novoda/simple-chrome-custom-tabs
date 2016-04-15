@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Patterns;
 import android.widget.TextView;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public final class WebLinkify {
         Spannable spannable = getSpannableTextOf(textView);
         removeAllUrlSpansFrom(spannable);
 
-        List<MatchedUrl> urls = new UrlFinder().findUrlsIn(spannable);
+        List<MatchedUrl> urls = new UrlFinder(Patterns.WEB_URL).findUrlsIn(spannable);
         UrlSpanFactory urlSpanFactory = new UrlSpanFactory(listener);
 
         for (MatchedUrl matchedUrl : urls) {

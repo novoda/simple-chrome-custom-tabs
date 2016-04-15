@@ -1,12 +1,17 @@
 package com.novoda.simplechromecustomtabs.demo.linkify;
 
-import android.util.Patterns;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class UrlFinder {
+
+    private final Pattern urlPattern;
+
+    public UrlFinder(Pattern urlPattern) {
+        this.urlPattern = urlPattern;
+    }
 
     List<MatchedUrl> findUrlsIn(CharSequence charSequence) {
         List<MatchedUrl> urls = new ArrayList<>();
@@ -14,7 +19,7 @@ class UrlFinder {
             return urls;
         }
 
-        Matcher matcher = Patterns.WEB_URL.matcher(charSequence);
+        Matcher matcher = urlPattern.matcher(charSequence);
         while (matcher.find()) {
             urls.add(new MatchedUrl(matcher.group(), matcher.start(), matcher.end()));
         }

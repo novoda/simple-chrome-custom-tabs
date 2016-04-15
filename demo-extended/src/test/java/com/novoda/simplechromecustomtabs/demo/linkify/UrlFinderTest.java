@@ -1,17 +1,17 @@
 package com.novoda.simplechromecustomtabs.demo.linkify;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-@RunWith(RobolectricTestRunner.class)
 public class UrlFinderTest {
 
-    private UrlFinder finder = new UrlFinder();
+    Pattern testPattern = Pattern.compile("^(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$");
+
+    private UrlFinder finder = new UrlFinder(testPattern);
 
     @Test
     public void passingNullReturnsEmptyList() {
@@ -40,7 +40,7 @@ public class UrlFinderTest {
 
     @Test
     public void finderFindsTheCorrectNumberOfUrls() {
-        String url = "List of URLs\n 1) http://www.novoda.com\n2) http://www.google.com 3) ???";
+        String url = "List of URLs\n 1) http://www.novoda.com\n2) www.google.com 3) ???";
         List<MatchedUrl> urls = finder.findUrlsIn(url);
         assertThat(urls.size()).isEqualTo(2);
     }
