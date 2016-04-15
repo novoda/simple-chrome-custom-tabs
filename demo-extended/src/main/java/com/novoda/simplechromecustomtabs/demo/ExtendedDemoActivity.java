@@ -42,18 +42,14 @@ public class ExtendedDemoActivity extends AppCompatActivity {
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
-                    .withIntentCustomizer(intentCustomizer)
-                    .navigateTo(WEB_URL, ExtendedDemoActivity.this);
+            navigateTo(WEB_URL);
         }
     };
 
     private final OnWebLinkClickedListener onWebLinkClickedListener = new OnWebLinkClickedListener() {
         @Override
         public void onClick(Uri uri) {
-            SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
-                    .withIntentCustomizer(intentCustomizer)
-                    .navigateTo(uri, ExtendedDemoActivity.this);
+            navigateTo(uri);
         }
     };
 
@@ -134,4 +130,9 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    private void navigateTo(Uri webUrl) {
+        SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
+                .withIntentCustomizer(intentCustomizer)
+                .navigateTo(webUrl, ExtendedDemoActivity.this);
+    }
 }
