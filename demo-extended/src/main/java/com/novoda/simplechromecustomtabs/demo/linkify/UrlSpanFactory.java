@@ -1,6 +1,5 @@
 package com.novoda.simplechromecustomtabs.demo.linkify;
 
-import android.net.Uri;
 import android.text.style.URLSpan;
 import android.view.View;
 
@@ -16,8 +15,7 @@ class UrlSpanFactory {
         return new URLSpan(webLinkUrl) {
             @Override
             public void onClick(View widget) {
-                Uri spanUrl = Uri.parse(getURL());
-                onWebLinkClickedListener.onClick(spanUrl);
+                onWebLinkClickedListener.onClick(webLinkUrl);
             }
         };
     }

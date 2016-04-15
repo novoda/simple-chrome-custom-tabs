@@ -1,6 +1,5 @@
 package com.novoda.simplechromecustomtabs.demo.linkify;
 
-import android.net.Uri;
 import android.text.style.URLSpan;
 import android.view.View;
 
@@ -8,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -29,17 +27,11 @@ public class UrlSpanFactoryTest {
     }
 
     @Test
-    public void factoryCreatesSpanWithCorrectUrl() {
-        URLSpan urlSpan = factory.createSpanFor(WEB_URL);
-        assertThat(WEB_URL).isEqualTo(urlSpan.getURL());
-    }
-
-    @Test
     public void factoryCreatesSpanWithCorrectClickListener() {
         URLSpan urlSpan = factory.createSpanFor(WEB_URL);
         urlSpan.onClick(any(View.class));
 
-        verify(mockListener).onClick(Uri.parse(WEB_URL));
+        verify(mockListener).onClick(WEB_URL);
 
     }
 

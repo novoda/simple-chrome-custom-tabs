@@ -48,8 +48,8 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     private final OnWebLinkClickedListener onWebLinkClickedListener = new OnWebLinkClickedListener() {
         @Override
-        public void onClick(Uri uri) {
-            navigateTo(uri);
+        public void onClick(String url) {
+            navigateTo(Uri.parse(url));
         }
     };
 
