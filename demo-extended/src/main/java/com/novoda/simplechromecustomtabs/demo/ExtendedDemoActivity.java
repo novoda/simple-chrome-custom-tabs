@@ -10,12 +10,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
-import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
+import com.novoda.simplechromecustomtabs.demo.linkify.OnWebLinkClickedListener;
+import com.novoda.simplechromecustomtabs.demo.linkify.WebLinkify;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
 
 import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
 
@@ -31,14 +34,22 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
         setContentView(R.layout.simple_demo_layout);
         findViewById(R.id.open_url_button).setOnClickListener(openUrlButtonClickListener);
+
+        TextView textView = (TextView) findViewById(R.id.open_url_link);
+        WebLinkify.addLinks(textView, onWebLinkClickedListener);
     }
 
     private final View.OnClickListener openUrlButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
-                    .withIntentCustomizer(intentCustomizer)
-                    .navigateTo(WEB_URL, ExtendedDemoActivity.this);
+            navigateTo(WEB_URL);
+        }
+    };
+
+    private final OnWebLinkClickedListener onWebLinkClickedListener = new OnWebLinkClickedListener() {
+        @Override
+        public void onClick(String url) {
+            navigateTo(Uri.parse(url));
         }
     };
 
@@ -119,4 +130,9 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    private void navigateTo(Uri webUrl) {
+        SimpleChromeCustomTabs.getInstance().withFallback(navigationFallback)
+                .withIntentCustomizer(intentCustomizer)
+                .navigateTo(webUrl, ExtendedDemoActivity.this);
+    }
 }
