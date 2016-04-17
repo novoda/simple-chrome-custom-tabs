@@ -1,10 +1,12 @@
 package com.novoda.simplechromecustomtabs.connection;
 
 import android.app.Activity;
+import android.net.Uri;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -13,12 +15,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class SimpleChromeCustomTabsConnectionTest {
 
+    private static Uri ANY_URI = Uri.EMPTY;
+
     @Mock
     private Binder mockBinder;
     @Mock
     private Activity mockActivity;
     @Mock
     private ConnectedClient mockConnectedClient;
+    @Mock
+    private Session mockSession;
 
     private SimpleChromeCustomTabsConnection simpleChromeCustomTabsConnection;
 
@@ -103,8 +109,38 @@ public class SimpleChromeCustomTabsConnectionTest {
         verify(mockConnectedClient, never()).disconnect();
     }
 
+    @Test
+    public void warmsUpFutureUrlForConnectedClientOnServiceConnected() {
+        givenAConnectedClient();
+
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+
+        verify(mockSession).mayLaunch(any(Uri.class));
+    }
+
+    @Test
+    public void warmsUpFutureUrlForConnectedClientOnMayLaunchUrl() {
+        givenAConnectedClient();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        Mockito.reset(mockSession);
+
+        simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
+
+        verify(mockSession).mayLaunch(ANY_URI);
+    }
+
+    @Test
+    public void doesNotWarmsUpFutureUrlForDisconnectedClient() {
+        givenADisconnectedClient();
+
+        simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
+
+        verifyZeroInteractions(mockSession);
+    }
+
     private void givenAConnectedClient() {
         when(mockConnectedClient.stillConnected()).thenReturn(true);
+        when(mockConnectedClient.newSession()).thenReturn(mockSession);
     }
 
     private void givenADisconnectedClient() {
