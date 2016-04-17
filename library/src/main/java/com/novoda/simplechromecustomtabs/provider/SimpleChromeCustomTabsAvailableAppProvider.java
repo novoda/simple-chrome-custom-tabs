@@ -17,7 +17,7 @@ public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppP
         this.executor = executor;
     }
 
-    public static SimpleChromeCustomTabsAvailableAppProvider newInstance() {
+    public static AvailableAppProvider newInstance() {
         BestPackageFinder bestPackageFinder = BestPackageFinder.newInstance();
         Executor executor = Executors.newSingleThreadExecutor();
         return new SimpleChromeCustomTabsAvailableAppProvider(bestPackageFinder, executor);
