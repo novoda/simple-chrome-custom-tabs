@@ -44,7 +44,7 @@ public class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
     }
 
     private CustomTabsIntent buildIntent() {
-        SimpleChromeCustomTabsIntentBuilder basicIntentBuilder = SimpleChromeCustomTabsIntentBuilder.newInstance();
+        SimpleChromeCustomTabsIntentBuilder basicIntentBuilder = SimpleChromeCustomTabsIntentBuilder.newInstance(connection);
 
         if (intentCustomizer == null) {
             return basicIntentBuilder.createIntent();

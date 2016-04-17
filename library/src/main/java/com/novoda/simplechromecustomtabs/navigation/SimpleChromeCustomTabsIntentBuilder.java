@@ -8,7 +8,6 @@ import android.support.annotation.ColorInt;
 import android.support.customtabs.CustomTabsIntent;
 
 import com.novoda.notils.exception.DeveloperError;
-import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.Session;
 
@@ -25,9 +24,9 @@ public class SimpleChromeCustomTabsIntentBuilder {
         this.composers = composers;
     }
 
-    public static SimpleChromeCustomTabsIntentBuilder newInstance() {
+    public static SimpleChromeCustomTabsIntentBuilder newInstance(Connection connection) {
         List<Composer> composerList = new ArrayList<>();
-        return new SimpleChromeCustomTabsIntentBuilder(SimpleChromeCustomTabs.getInstance(), composerList);
+        return new SimpleChromeCustomTabsIntentBuilder(connection, composerList);
     }
 
     public SimpleChromeCustomTabsIntentBuilder withToolbarColor(@ColorInt int color) {
