@@ -3,8 +3,9 @@ package com.novoda.simplechromecustomtabs.navigation;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 import com.novoda.notils.exception.DeveloperError;
+import com.novoda.simplechromecustomtabs.connection.Session;
+import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +45,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
 
         simpleChromeCustomTabsIntentBuilder = new SimpleChromeCustomTabsIntentBuilder(mockSimpleChromeCustomTabsConnection, mockComposers);
         when(mockComposers.iterator()).thenReturn(Collections.<Composer>emptyListIterator());
+        when(mockSimpleChromeCustomTabsConnection.getSession()).thenReturn(mock(Session.class));
     }
 
     @Test(expected = DeveloperError.class)
@@ -54,12 +56,12 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     }
 
     @Test
-    public void requestsNewSessionOnCustomTabsConnectionIfConnected() {
+    public void requeSessionOnCustomTabsConnectionIfConnected() {
         givenIsConnected();
 
         simpleChromeCustomTabsIntentBuilder.createIntent();
 
-        verify(mockSimpleChromeCustomTabsConnection).newSession();
+        verify(mockSimpleChromeCustomTabsConnection).getSession();
     }
 
     @Test

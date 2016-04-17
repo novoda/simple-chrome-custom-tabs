@@ -27,6 +27,7 @@ public class SimpleChromeCustomTabsConnectionTest {
         initMocks(this);
 
         when(mockActivity.getApplicationContext()).thenReturn(Robolectric.application);
+        when(mockConnectedClient.newSession()).thenReturn(mock(Session.class));
 
         simpleChromeCustomTabsConnection = new SimpleChromeCustomTabsConnection(mockBinder);
     }
@@ -68,7 +69,6 @@ public class SimpleChromeCustomTabsConnectionTest {
         givenAConnectedClient();
 
         simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        simpleChromeCustomTabsConnection.newSession();
 
         verify(mockConnectedClient).newSession();
     }
@@ -78,7 +78,7 @@ public class SimpleChromeCustomTabsConnectionTest {
         givenADisconnectedClient();
 
         simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        assertThat(simpleChromeCustomTabsConnection.newSession()).isNull();
+        assertThat(simpleChromeCustomTabsConnection.getSession()).isEqualTo(Session.NULL_SESSION);
 
         verify(mockConnectedClient, never()).newSession();
     }
