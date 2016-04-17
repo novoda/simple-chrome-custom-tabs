@@ -15,7 +15,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
 
-import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.*;
+import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -42,31 +42,35 @@ public class BinderTest {
     }
 
     @Test
-    public void bindsActivityToServiceIfNotAlreadyBoundAndPackageAvailable() {
-        bindServiceGivenThatPackageIsAvailable();
+    public void givenThatActivityIsBeingBoundToService_whenPackageIsFound_thenActivityIsBound() {
+        givenThatActivityIsBeingBoundToService();
+
+        whenPackageIsFound();
 
         verify(mockActivity).bindService(any(Intent.class), any(ServiceConnection.class), anyInt());
     }
 
     @Test
-    public void doesNotBindActivityToServiceIfAlreadyBound() {
-        givenThatActivityIsAlreadyBound();
+    public void givenThatActivityIsAlreadyBoundToService_whenBindingActivityToService_thenPackageIsNotSearched() {
+        givenThatActivityIsAlreadyBoundtoService();
 
-        binder.bindCustomTabsServiceTo(mockActivity, mockServiceConnectionCallback);
+        bindActivityToService();
+
+        verifyNoMoreInteractions(mockAvailableAppProvider);
+    }
+
+    @Test
+    public void givenThatActivityIsBeingBoundToService_whenPackageIsFound_thenActivityIsNotBound() {
+        bindActivityToService();
+
+        whenPackageIsNotFound();
 
         verifyNoMoreInteractions(mockActivity);
     }
 
     @Test
-    public void doesNotBindActivityToServiceIfPackageNotAvailable() {
-        binder.bindCustomTabsServiceTo(mockActivity, mockServiceConnectionCallback);
-
-        verifyNoMoreInteractions(mockActivity);
-    }
-
-    @Test
-    public void unbindsActivityFromServiceIfAlreadyBound() {
-        bindService();
+    public void givenThatActivityIsBoundToServce_whenActivityIsUnboundFromService_thenActivityIsUnbound() {
+        givenThatActivityIsAlreadyBoundtoService();
 
         binder.unbindCustomTabsService(mockActivity);
 
@@ -74,25 +78,41 @@ public class BinderTest {
     }
 
     @Test
-    public void doesNotUnbindActivityFromServiceIfNotAlreadyBound() {
+    public void givenThatActivityIsNotBoundToService_whenActivityIsUnboundFromService_thenNothingHappens() {
+        givenThatActivityIsNotBoundToService();
+
         binder.unbindCustomTabsService(mockActivity);
 
         verifyZeroInteractions(mockActivity);
     }
 
-    private void bindService() {
+    private void givenThatActivityIsBeingBoundToService() {
+        bindActivityToService();
+    }
+
+    private void givenThatActivityIsNotBoundToService() {
+        //no-op
+    }
+
+    private void bindActivityToService() {
         binder.bindCustomTabsServiceTo(mockActivity, mockServiceConnectionCallback);
     }
 
-    private void givenThatActivityIsAlreadyBound() {
-        bindService();
-    }
-
-    private void bindServiceGivenThatPackageIsAvailable() {
-        bindService();
-
+    private void whenPackageIsFound() {
         verify(mockAvailableAppProvider).findBestPackage(packageFoundCallbackCaptor.capture());
         packageFoundCallbackCaptor.getValue().onPackageFound("anyPackage");
+    }
+
+    private void whenPackageIsNotFound() {
+        verify(mockAvailableAppProvider).findBestPackage(packageFoundCallbackCaptor.capture());
+        packageFoundCallbackCaptor.getValue().onPackageNotFound();
+    }
+
+    private void givenThatActivityIsAlreadyBoundtoService() {
+        givenThatActivityIsBeingBoundToService();
+        whenPackageIsFound();
+        reset(mockActivity);
+        reset(mockServiceConnectionCallback);
     }
 
 }

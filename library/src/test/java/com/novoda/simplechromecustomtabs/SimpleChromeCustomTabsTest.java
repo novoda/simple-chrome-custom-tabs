@@ -13,12 +13,12 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class SimpleChromeCustomTabsTest {
 
     @Test(expected = DeveloperError.class)
-    public void getInstanceThrowsDeveloperErrorIfNotInitialized() {
+    public void givenSimpleChromeCustomTabsIsNotInitialised_whenGettingInstance_thenDeveloperErrorIsThrown() {
         SimpleChromeCustomTabs.getInstance();
     }
 
     @Test
-    public void getInstanceReturnsIfInitialized() {
+    public void givenSimpleChromeCustomTabsIsInitialised_whenGettingInstance_thenInstanceIsReturned() {
         SimpleChromeCustomTabs.initialize(Robolectric.application);
 
         assertThat(SimpleChromeCustomTabs.getInstance()).isInstanceOf(SimpleChromeCustomTabs.class);

@@ -6,10 +6,8 @@ import android.net.Uri;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 
-import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -39,21 +37,21 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void connectToBindsApplicationContextToService() {
+    public void whenBindingActivityToService_thenApplicationContextIsBound() {
         simpleChromeCustomTabsConnection.connectTo(mockActivity);
 
         verify(mockBinder).bindCustomTabsServiceTo(mockActivity.getApplicationContext(), simpleChromeCustomTabsConnection);
     }
 
     @Test
-    public void disconnectFromUnbindsApplicationContextFromService() {
+    public void whenUnbindingActivityToService_thenApplicationContextIsUnbound() {
         simpleChromeCustomTabsConnection.disconnectFrom(mockActivity);
 
         verify(mockBinder).unbindCustomTabsService(mockActivity.getApplicationContext());
     }
 
     @Test
-    public void createsNewSessionWhenClientIsStillConnected() {
+    public void givenAConnectedClient_whenOnServiceConnectedIsCalled_thenClientStartsNewSession() {
         givenAConnectedClient();
 
         simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
@@ -62,38 +60,35 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void doesNotCreateNewSessionWhenClientIsDisconnected() {
+    public void givenADisconnectedClient_whenOnServiceConnectedIsCalled_thenClientDoesNotStartNewSession() {
         givenADisconnectedClient();
 
         simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        assertThat(simpleChromeCustomTabsConnection.getSession()).isEqualTo(Session.NULL_SESSION);
 
         verify(mockConnectedClient, never()).newSession();
     }
 
     @Test
-    public void disconnectsConnectedClientOnServiceDisconnected() {
-        givenAConnectedClient();
+    public void givenAnAlreadyStartedSession_whenOnServiceDisconnectedIsCalled_thenClientDisconnects() {
+        givenAnAlreadyStartedSession();
 
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
         simpleChromeCustomTabsConnection.onServiceDisconnected();
 
         verify(mockConnectedClient).disconnect();
     }
 
     @Test
-    public void doesNotDisconnectDisconnectedConnectedClientOnServiceDisconnected() {
+    public void givenADisconnectedClient_whenOnServiceDisconnectedIsCalled_thenTheClientDoesnNotDisconnect() {
         givenADisconnectedClient();
 
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
         simpleChromeCustomTabsConnection.onServiceDisconnected();
 
         verify(mockConnectedClient, never()).disconnect();
     }
 
     @Test
-    public void warmsUpFutureUrlForConnectedClientOnServiceConnected() {
-        simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
+    public void givenAUrlAwaitingToBeWarmedUp_andAConnectedClient_whenOnServiceConnectedIsCalled_thenUrlIsWarmedUp() {
+        givenAUrlAwaitingToBeWarmedUp();
         givenAConnectedClient();
 
         simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
@@ -102,10 +97,8 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void warmsUpFutureUrlForConnectedClientOnMayLaunchUrl() {
-        givenAConnectedClient();
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        Mockito.reset(mockSession);
+    public void givenAnAlreadyStartedSession_whenMayLaunchIsCalled_thenUrlIsWarmedUp() {
+        givenAnAlreadyStartedSession();
 
         simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
 
@@ -113,10 +106,8 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void doesNotWarmsUpFutureUrlIfItIsEmpty() {
-        givenAConnectedClient();
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        Mockito.reset(mockSession);
+    public void givenAnAlreadyStartedSession_andAnEmptyUrl_whenMayLaunchIsCalled_thenUrlIsNotWarmedUp() {
+        givenAnAlreadyStartedSession();
 
         simpleChromeCustomTabsConnection.mayLaunch(Uri.EMPTY);
 
@@ -124,10 +115,8 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void doesNotWarmsUpFutureUrlIfItIsNull() {
-        givenAConnectedClient();
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-        Mockito.reset(mockSession);
+    public void givenAnAlreadyStartedSession_andAnNullUrl_whenMayLaunchIsCalled_thenUrlIsNotWarmedUp() {
+        givenAnAlreadyStartedSession();
 
         simpleChromeCustomTabsConnection.mayLaunch(null);
 
@@ -135,8 +124,8 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void doesNotWarmsUpFutureUrlForDisconnectedClient() {
-        givenADisconnectedClient();
+    public void givenASessionIsNotStarted_whenMayLaunchIsCalled_thenUrlIsNotWarmedUp() {
+        givenASessionIsNotStarted();
 
         simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
 
@@ -150,6 +139,20 @@ public class SimpleChromeCustomTabsConnectionTest {
 
     private void givenADisconnectedClient() {
         when(mockConnectedClient.stillConnected()).thenReturn(false);
+    }
+
+    private void givenAnAlreadyStartedSession() {
+        givenAConnectedClient();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+    }
+
+    private void givenASessionIsNotStarted() {
+        //no-op
+    }
+
+    private void givenAUrlAwaitingToBeWarmedUp() {
+        givenADisconnectedClient();
+        simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
     }
 
 }
