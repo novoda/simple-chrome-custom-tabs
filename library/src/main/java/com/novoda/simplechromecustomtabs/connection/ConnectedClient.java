@@ -20,6 +20,8 @@ class ConnectedClient {
             throw new DeveloperError("Cannot start session on a disconnected client. Use stillConnected() to check connection");
         }
 
+        warmup();
+
         return SimpleChromeCustomTabsSession.newSessionFor(customTabsClient);
     }
 
@@ -27,11 +29,7 @@ class ConnectedClient {
         return customTabsClient != null;
     }
 
-    public void warmup() {
-        if (!stillConnected()) {
-            throw new DeveloperError("Cannot warm up a disconnected client. Use stillConnected() to check connection");
-        }
-
+    private void warmup() {
         customTabsClient.warmup(NO_FLAGS);
     }
 

@@ -53,24 +53,6 @@ public class SimpleChromeCustomTabsConnectionTest {
     }
 
     @Test
-    public void warmsUpConnectedClientOnServiceConnected() {
-        givenAConnectedClient();
-
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-
-        verify(mockConnectedClient).warmup();
-    }
-
-    @Test
-    public void doesNotWarmUpDisconnectedClientOnServiceConnected() {
-        givenADisconnectedClient();
-
-        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
-
-        verify(mockConnectedClient, never()).warmup();
-    }
-
-    @Test
     public void createsNewSessionWhenClientIsStillConnected() {
         givenAConnectedClient();
 

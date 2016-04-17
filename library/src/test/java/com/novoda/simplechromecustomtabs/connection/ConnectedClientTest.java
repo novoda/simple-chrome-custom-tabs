@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -54,20 +56,20 @@ public class ConnectedClientTest {
         assertThat(connectedClient.stillConnected()).isFalse();
     }
 
-    @Test(expected = DeveloperError.class)
-    public void warmupThrowsDeveloperErrorIfNotConnected() {
-        connectedClient.disconnect();
-
-        connectedClient.warmup();
-
-        verifyZeroInteractions(mockCustomTabsClient);
-    }
-
     @Test
-    public void warmupDelegatesIfConnected() {
-        connectedClient.warmup();
+    public void newSessionWarmsUpClientUpIfConnected() {
+        connectedClient.newSession();
 
         verify(mockCustomTabsClient).warmup(0);
+    }
+
+    @Test(expected = DeveloperError.class)
+    public void newSessionDoesNotWarmUpClientUpIfDisconnected() {
+        connectedClient.disconnect();
+
+        connectedClient.newSession();
+
+        verify(mockCustomTabsClient, never()).warmup(anyInt());
     }
 
 }

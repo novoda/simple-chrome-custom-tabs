@@ -10,7 +10,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     private ConnectedClient client;
     private Session session = Session.NULL_SESSION;
-    private Uri futureUrl;
+    private Uri pendingUrlToWarmUp;
 
     SimpleChromeCustomTabsConnection(Binder binder) {
         this.binder = binder;
@@ -31,10 +31,18 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
         this.client = client;
 
         if (hasConnectedClient()) {
-            this.client.warmup();
             session = client.newSession();
-            mayLaunch(futureUrl);
+            warmUpPendingUrl();
         }
+    }
+
+    private void warmUpPendingUrl() {
+        if (isEmpty(pendingUrlToWarmUp)) {
+            return;
+        }
+
+        session.mayLaunch(pendingUrlToWarmUp);
+        pendingUrlToWarmUp = Uri.EMPTY;
     }
 
     private boolean hasConnectedClient() {
@@ -52,8 +60,11 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
             return;
         }
 
-        futureUrl = url;
-        session.mayLaunch(futureUrl);
+        if (isConnected()) {
+            session.mayLaunch(url);
+        } else {
+            pendingUrlToWarmUp = url;
+        }
     }
 
     private boolean isEmpty(Uri url) {
