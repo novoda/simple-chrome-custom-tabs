@@ -1,8 +1,8 @@
 package com.novoda.simplechromecustomtabs.connection;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.customtabs.CustomTabsSession;
 
 public interface Connection {
 
@@ -10,7 +10,9 @@ public interface Connection {
 
     boolean isConnected();
 
-    CustomTabsSession newSession();
+    void mayLaunch(Uri url);
+
+    Session getSession();
 
     void disconnectFrom(@NonNull Activity activity);
 

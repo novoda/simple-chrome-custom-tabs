@@ -6,11 +6,11 @@ import android.graphics.Bitmap;
 import android.support.annotation.AnimRes;
 import android.support.annotation.ColorInt;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.customtabs.CustomTabsSession;
 
+import com.novoda.notils.exception.DeveloperError;
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.connection.Connection;
-import com.novoda.notils.exception.DeveloperError;
+import com.novoda.simplechromecustomtabs.connection.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +78,9 @@ public class SimpleChromeCustomTabsIntentBuilder {
             throw new DeveloperError("An active connection to custom tabs service is required for intent creation");
         }
 
-        CustomTabsSession customTabsSession = connection.newSession();
+        Session session = connection.getSession();
 
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(customTabsSession);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(session.getCustomTabsSession());
         for (Composer composer : composers) {
             builder = composer.compose(builder);
         }

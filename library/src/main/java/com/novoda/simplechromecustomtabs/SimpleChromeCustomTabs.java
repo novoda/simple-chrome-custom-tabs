@@ -5,19 +5,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsSession;
 
+import com.novoda.notils.exception.DeveloperError;
 import com.novoda.simplechromecustomtabs.connection.Connection;
+import com.novoda.simplechromecustomtabs.connection.Session;
 import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
-import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
-import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsWebNavigator;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
+import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsWebNavigator;
 import com.novoda.simplechromecustomtabs.navigation.WebNavigator;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
 import com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider;
-import com.novoda.notils.exception.DeveloperError;
 
 import java.util.List;
 
@@ -109,15 +109,24 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     }
 
     /**
-     * Starts a new session for Chrome Custom Tabs usage. Can be used to warmup particular Urls.
+     * Tells SimpleChromeCustomTabs that a potential Url might be launched. This will do pre DNS resolution that will speed things up.
+     * @param uri
+     * @return WebNavigator with warmed up url
+     */
+    @Override
+    public void mayLaunch(Uri uri) {
+        connection.mayLaunch(uri);
+    }
+
+    /**
+     * Get current active session for Chrome Custom Tabs usage. Can be used to warmup particular Urls.
      * {@see {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}}
      *
      * @return a new {@link CustomTabsSession} or null if not connected to service.
      */
     @Override
-    @Nullable
-    public CustomTabsSession newSession() {
-        return connection.newSession();
+    public Session getSession() {
+        return connection.getSession();
     }
 
     @Override

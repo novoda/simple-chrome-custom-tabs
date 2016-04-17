@@ -2,29 +2,21 @@ package com.novoda.simplechromecustomtabs.connection;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsSession;
 
-import java.util.List;
-
-/**
- * TODO Open implementation to allow {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}
- */
 public class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
-
-    private static final CustomTabsSession NULL_SESSION = null;
 
     private final Binder binder;
 
     private ConnectedClient client;
+    private Session session = Session.NULL_SESSION;
+    private Uri futureUrl;
 
     SimpleChromeCustomTabsConnection(Binder binder) {
         this.binder = binder;
     }
 
-    public static SimpleChromeCustomTabsConnection newInstance() {
+    public static Connection newInstance() {
         Binder binder = Binder.newInstance();
         return new SimpleChromeCustomTabsConnection(binder);
     }
@@ -40,7 +32,13 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
         if (hasConnectedClient()) {
             this.client.warmup();
+            session = client.newSession();
+            session.mayLaunch(futureUrl);
         }
+    }
+
+    private boolean hasConnectedClient() {
+        return client != null && client.stillConnected();
     }
 
     @Override
@@ -49,17 +47,14 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
     }
 
     @Override
-    @Nullable
-    public CustomTabsSession newSession() {
-        if (hasConnectedClient()) {
-            return client.newSession();
-        }
-
-        return NULL_SESSION;
+    public void mayLaunch(Uri url) {
+        futureUrl = url;
+        session.mayLaunch(futureUrl);
     }
 
-    private boolean hasConnectedClient() {
-        return client != null && client.stillConnected();
+    @Override
+    public Session getSession() {
+        return session;
     }
 
     @Override
