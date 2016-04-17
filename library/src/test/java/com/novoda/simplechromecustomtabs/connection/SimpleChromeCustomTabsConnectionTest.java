@@ -15,7 +15,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class SimpleChromeCustomTabsConnectionTest {
 
-    private static Uri ANY_URI = Uri.EMPTY;
+    private static Uri ANY_URI = mock(Uri.class);
 
     @Mock
     private Binder mockBinder;
@@ -111,11 +111,12 @@ public class SimpleChromeCustomTabsConnectionTest {
 
     @Test
     public void warmsUpFutureUrlForConnectedClientOnServiceConnected() {
+        simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
         givenAConnectedClient();
 
         simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
 
-        verify(mockSession).mayLaunch(any(Uri.class));
+        verify(mockSession).mayLaunch(ANY_URI);
     }
 
     @Test
@@ -127,6 +128,28 @@ public class SimpleChromeCustomTabsConnectionTest {
         simpleChromeCustomTabsConnection.mayLaunch(ANY_URI);
 
         verify(mockSession).mayLaunch(ANY_URI);
+    }
+
+    @Test
+    public void doesNotWarmsUpFutureUrlIfItIsEmpty() {
+        givenAConnectedClient();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        Mockito.reset(mockSession);
+
+        simpleChromeCustomTabsConnection.mayLaunch(Uri.EMPTY);
+
+        verifyZeroInteractions(mockSession);
+    }
+
+    @Test
+    public void doesNotWarmsUpFutureUrlIfItIsNull() {
+        givenAConnectedClient();
+        simpleChromeCustomTabsConnection.onServiceConnected(mockConnectedClient);
+        Mockito.reset(mockSession);
+
+        simpleChromeCustomTabsConnection.mayLaunch(null);
+
+        verifyZeroInteractions(mockSession);
     }
 
     @Test

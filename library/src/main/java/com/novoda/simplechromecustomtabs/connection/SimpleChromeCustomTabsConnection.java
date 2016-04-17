@@ -33,7 +33,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
         if (hasConnectedClient()) {
             this.client.warmup();
             session = client.newSession();
-            session.mayLaunch(futureUrl);
+            mayLaunch(futureUrl);
         }
     }
 
@@ -48,8 +48,16 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     @Override
     public void mayLaunch(Uri url) {
+        if (isEmpty(url)) {
+            return;
+        }
+
         futureUrl = url;
         session.mayLaunch(futureUrl);
+    }
+
+    private boolean isEmpty(Uri url) {
+        return url == null || url.equals(Uri.EMPTY) ;
     }
 
     @Override
