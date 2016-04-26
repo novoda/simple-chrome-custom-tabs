@@ -50,15 +50,15 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
     }
 
     @Override
-    public void mayLaunch(Uri url) {
-        if (isEmpty(url)) {
+    public void mayLaunch(Uri uri) {
+        if (isEmpty(uri)) {
             return;
         }
 
         if (hasActiveSession()) {
-            session.mayLaunch(url);
+            session.mayLaunch(uri);
         } else {
-            pendingUrlToWarmUp = url;
+            pendingUrlToWarmUp = uri;
         }
     }
 
