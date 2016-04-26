@@ -30,28 +30,23 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
     public void onServiceConnected(ConnectedClient client) {
         this.client = client;
 
-        if (hasConnectedClient()) {
+        if (isConnected()) {
             session = client.newSession();
-            warmUpPendingUrl();
+            warmUpPendingUrlIfAny();
         }
     }
 
-    private void warmUpPendingUrl() {
+    private void warmUpPendingUrlIfAny() {
         if (isEmpty(pendingUrlToWarmUp)) {
             return;
         }
-
         session.mayLaunch(pendingUrlToWarmUp);
         pendingUrlToWarmUp = Uri.EMPTY;
     }
 
-    private boolean hasConnectedClient() {
-        return client != null && client.stillConnected();
-    }
-
     @Override
     public boolean isConnected() {
-        return hasConnectedClient();
+        return client != null && client.stillConnected();
     }
 
     @Override
@@ -60,7 +55,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
             return;
         }
 
-        if (isConnected()) {
+        if (hasActiveSession()) {
             session.mayLaunch(url);
         } else {
             pendingUrlToWarmUp = url;
@@ -69,6 +64,10 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     private boolean isEmpty(Uri url) {
         return url == null || url.equals(Uri.EMPTY) ;
+    }
+
+    private boolean hasActiveSession() {
+        return isConnected() && session != null;
     }
 
     @Override
@@ -88,7 +87,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     @Override
     public void onServiceDisconnected() {
-        if (hasConnectedClient()) {
+        if (isConnected()) {
             client.disconnect();
         }
     }
