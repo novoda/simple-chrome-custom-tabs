@@ -17,21 +17,24 @@ public class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
         this.connection = connection;
     }
 
-    public static SimpleChromeCustomTabsWebNavigator newInstance() {
+    public static WebNavigator newInstance() {
         Connection connection = SimpleChromeCustomTabs.getInstance();
         return new SimpleChromeCustomTabsWebNavigator(connection);
     }
 
-    public SimpleChromeCustomTabsWebNavigator withFallback(NavigationFallback navigationFallback) {
+    @Override
+    public WebNavigator withFallback(NavigationFallback navigationFallback) {
         this.navigationFallback = navigationFallback;
         return this;
     }
 
-    public SimpleChromeCustomTabsWebNavigator withIntentCustomizer(IntentCustomizer intentCustomizer) {
+    @Override
+    public WebNavigator withIntentCustomizer(IntentCustomizer intentCustomizer) {
         this.intentCustomizer = intentCustomizer;
         return this;
     }
 
+    @Override
     public void navigateTo(Uri url, Activity activityContext) {
         if (connection.isConnected()) {
             buildIntent().launchUrl(activityContext, url);
@@ -41,7 +44,7 @@ public class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
     }
 
     private CustomTabsIntent buildIntent() {
-        SimpleChromeCustomTabsIntentBuilder basicIntentBuilder = SimpleChromeCustomTabsIntentBuilder.newInstance();
+        SimpleChromeCustomTabsIntentBuilder basicIntentBuilder = SimpleChromeCustomTabsIntentBuilder.newInstance(connection);
 
         if (intentCustomizer == null) {
             return basicIntentBuilder.createIntent();

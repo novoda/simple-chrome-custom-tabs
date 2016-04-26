@@ -2,9 +2,11 @@ package com.novoda.simplechromecustomtabs.navigation;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 import com.novoda.notils.exception.DeveloperError;
+import com.novoda.simplechromecustomtabs.connection.Session;
+import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,82 +46,85 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
 
         simpleChromeCustomTabsIntentBuilder = new SimpleChromeCustomTabsIntentBuilder(mockSimpleChromeCustomTabsConnection, mockComposers);
         when(mockComposers.iterator()).thenReturn(Collections.<Composer>emptyListIterator());
+        when(mockSimpleChromeCustomTabsConnection.getSession()).thenReturn(mock(Session.class));
     }
 
     @Test(expected = DeveloperError.class)
-    public void throwsDeveloperErrorIfCreatingIntentWithNoConnection() {
+    public void givenThereIsNoConnection_whenCreatingIntent_thenDeveloperErrorIsThrown() {
         givenIsDisconnected();
 
         simpleChromeCustomTabsIntentBuilder.createIntent();
     }
 
     @Test
-    public void requestsNewSessionOnCustomTabsConnectionIfConnected() {
+    public void givenThereIsAConnection_whenCreatingIntent_thenSessionIsRetrieved() {
         givenIsConnected();
 
         simpleChromeCustomTabsIntentBuilder.createIntent();
 
-        verify(mockSimpleChromeCustomTabsConnection).newSession();
+        verify(mockSimpleChromeCustomTabsConnection).getSession();
     }
 
     @Test
-    public void returnsIntentIfConnected() {
+    public void givenThereIsAConnection_whenCreatingIntent_thenIntentIsCreated() {
         givenIsConnected();
 
-        assertThat(simpleChromeCustomTabsIntentBuilder.createIntent()).isNotNull();
+        CustomTabsIntent resultIntent = simpleChromeCustomTabsIntentBuilder.createIntent();
+
+        assertThat(resultIntent).isNotNull();
     }
 
     @Test
-    public void withToolbarColorAddsToolbarColorComposer() {
+    public void givenToolbarColorIsSet_thenToolbarColorComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withToolbarColor(ANY_COLOR);
 
         verify(mockComposers).add(any(ToolbarColorComposer.class));
     }
 
     @Test
-    public void withUrlBarHidingAddsUrlBarHidingComposer() {
+    public void givenUrlBarHidingIsSet_thenUrlBarHidingComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withUrlBarHiding();
 
         verify(mockComposers).add(any(UrlBarHidingComposer.class));
     }
 
     @Test
-    public void withMenuItemAddsMenuItemComposer() {
+    public void givenMenuItemIsSet_thenMenuItemComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withMenuItem(ANY_LABEL, ANY_PENDING_INTENT);
 
         verify(mockComposers).add(any(MenuItemComposer.class));
     }
 
     @Test
-    public void withActionButtonAddsActionButtonComposer() {
+    public void givenActionButtonIsSet_thenActionButtonComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withActionButton(ANY_ICON, ANY_DESCRIPTION, ANY_PENDING_INTENT, false);
 
         verify(mockComposers).add(any(ActionButtonComposer.class));
     }
 
     @Test
-    public void withCloseButtonAddsCloseButtonComposer() {
+    public void givenCloseButtonIconIsSet_thenCloseButtonIconComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withCloseButtonIcon(ANY_ICON);
 
         verify(mockComposers).add(any(CloseButtonIconComposer.class));
     }
 
     @Test
-    public void withExitAnimationsAddsExitAnimationsComposer() {
+    public void givenExitAnimationIsSet_thenExitAnimationComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withExitAnimations(ANY_CONTEXT, ANY_ANIM_RES, ANY_ANIM_RES);
 
         verify(mockComposers).add(any(ExitAnimationsComposer.class));
     }
 
     @Test
-    public void withStartAnimationsAddsStartAnimationsComposer() {
+    public void givenStartAnimationIsSet_thenStartAnimationComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withStartAnimations(ANY_CONTEXT, ANY_ANIM_RES, ANY_ANIM_RES);
 
         verify(mockComposers).add(any(StartAnimationsComposer.class));
     }
 
     @Test
-    public void showingTitleAddsShowingTitleComposer() {
+    public void givenShowingTitleIsSet_thenShowingTitleComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.showingTitle();
 
         verify(mockComposers).add(any(ShowTitleComposer.class));

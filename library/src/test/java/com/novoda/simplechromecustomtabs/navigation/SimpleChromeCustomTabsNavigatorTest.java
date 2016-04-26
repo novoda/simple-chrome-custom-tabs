@@ -6,6 +6,7 @@ import android.support.customtabs.CustomTabsIntent;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.connection.Connection;
+import com.novoda.simplechromecustomtabs.connection.Session;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,22 +44,22 @@ public class SimpleChromeCustomTabsNavigatorTest {
         SimpleChromeCustomTabs.initialize(Robolectric.application);
         when(mockIntentCustomizer.onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class))).thenReturn(mockSimpleChromeCustomTabsIntentBuilder);
         when(mockSimpleChromeCustomTabsIntentBuilder.createIntent()).thenReturn(ANY_INTENT);
+        when(mockConnection.getSession()).thenReturn(Session.NULL_SESSION);
 
         webNavigator = new SimpleChromeCustomTabsWebNavigator(mockConnection);
     }
 
     @Test
-    public void navigateToWillFallbackIfHasFallbackAndNotConnected() {
+    public void givenThereIsNoConnection_whenNavigatingWithFallback_thenNavigatesWithFallback() {
         when(mockConnection.isConnected()).thenReturn(false);
-        webNavigator.withFallback(mockNavigationFallback);
 
-        webNavigator.navigateTo(ANY_URL, mockActivity);
+        webNavigator.withFallback(mockNavigationFallback).navigateTo(ANY_URL, mockActivity);
 
         verify(mockNavigationFallback).onFallbackNavigateTo(ANY_URL);
     }
 
     @Test
-    public void navigateToDoesNothingIfHasNotFallbackAndNotConnected() {
+    public void givenThereIsNoConnection_whenNavigatingWithoutFallback_thenNothingHappens() {
         when(mockConnection.isConnected()).thenReturn(false);
 
         webNavigator.navigateTo(ANY_URL, mockActivity);
@@ -67,11 +68,19 @@ public class SimpleChromeCustomTabsNavigatorTest {
     }
 
     @Test
-    public void intentBuilderIsCustomizedIfConnectedAndHasCustomizer() {
+    public void givenThereIsAConnection_whenNavigatingWithFallback_thenNavigatesWithoutFallback() {
         when(mockConnection.isConnected()).thenReturn(true);
-        webNavigator.withIntentCustomizer(mockIntentCustomizer);
 
-        webNavigator.navigateTo(ANY_URL, mockActivity);
+        webNavigator.withFallback(mockNavigationFallback).navigateTo(ANY_URL, mockActivity);
+
+        verifyZeroInteractions(mockNavigationFallback);
+    }
+
+    @Test
+    public void givenThereIsAConnection_whenNavigatingWithIntentCustomizer_thenIntentIsCustomised() {
+        when(mockConnection.isConnected()).thenReturn(true);
+
+        webNavigator.withIntentCustomizer(mockIntentCustomizer).navigateTo(ANY_URL, mockActivity);
 
         verify(mockIntentCustomizer).onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class));
     }

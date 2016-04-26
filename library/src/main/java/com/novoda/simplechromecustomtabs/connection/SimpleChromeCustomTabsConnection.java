@@ -2,29 +2,21 @@ package com.novoda.simplechromecustomtabs.connection;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsSession;
 
-import java.util.List;
-
-/**
- * TODO Open implementation to allow {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}
- */
 public class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
-
-    private static final CustomTabsSession NULL_SESSION = null;
 
     private final Binder binder;
 
     private ConnectedClient client;
+    private Session session = Session.NULL_SESSION;
+    private Uri pendingUrlToWarmUp;
 
     SimpleChromeCustomTabsConnection(Binder binder) {
         this.binder = binder;
     }
 
-    public static SimpleChromeCustomTabsConnection newInstance() {
+    public static Connection newInstance() {
         Binder binder = Binder.newInstance();
         return new SimpleChromeCustomTabsConnection(binder);
     }
@@ -38,28 +30,49 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
     public void onServiceConnected(ConnectedClient client) {
         this.client = client;
 
-        if (hasConnectedClient()) {
-            this.client.warmup();
+        if (isConnected()) {
+            session = client.newSession();
+            warmUpPendingUrlIfAny();
         }
+    }
+
+    private void warmUpPendingUrlIfAny() {
+        if (isEmpty(pendingUrlToWarmUp)) {
+            return;
+        }
+        session.mayLaunch(pendingUrlToWarmUp);
+        pendingUrlToWarmUp = Uri.EMPTY;
     }
 
     @Override
     public boolean isConnected() {
-        return hasConnectedClient();
+        return client != null && client.stillConnected();
     }
 
     @Override
-    @Nullable
-    public CustomTabsSession newSession() {
-        if (hasConnectedClient()) {
-            return client.newSession();
+    public void mayLaunch(Uri uri) {
+        if (isEmpty(uri)) {
+            return;
         }
 
-        return NULL_SESSION;
+        if (hasActiveSession()) {
+            session.mayLaunch(uri);
+        } else {
+            pendingUrlToWarmUp = uri;
+        }
     }
 
-    private boolean hasConnectedClient() {
-        return client != null && client.stillConnected();
+    private boolean isEmpty(Uri url) {
+        return url == null || url.equals(Uri.EMPTY) ;
+    }
+
+    private boolean hasActiveSession() {
+        return isConnected() && session != null;
+    }
+
+    @Override
+    public Session getSession() {
+        return session;
     }
 
     @Override
@@ -74,7 +87,7 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     @Override
     public void onServiceDisconnected() {
-        if (hasConnectedClient()) {
+        if (isConnected()) {
             client.disconnect();
         }
     }

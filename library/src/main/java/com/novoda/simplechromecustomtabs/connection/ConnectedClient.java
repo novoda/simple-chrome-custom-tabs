@@ -2,7 +2,6 @@ package com.novoda.simplechromecustomtabs.connection;
 
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsClient;
-import android.support.customtabs.CustomTabsSession;
 
 import com.novoda.notils.exception.DeveloperError;
 
@@ -16,23 +15,21 @@ class ConnectedClient {
         this.customTabsClient = customTabsClient;
     }
 
-    public CustomTabsSession newSession() {
+    public Session newSession() {
         if (!stillConnected()) {
             throw new DeveloperError("Cannot start session on a disconnected client. Use stillConnected() to check connection");
         }
 
-        return customTabsClient.newSession(null);
+        warmup();
+
+        return SimpleChromeCustomTabsSession.newSessionFor(customTabsClient);
     }
 
     public boolean stillConnected() {
         return customTabsClient != null;
     }
 
-    public void warmup() {
-        if (!stillConnected()) {
-            throw new DeveloperError("Cannot warm up a disconnected client. Use stillConnected() to check connection");
-        }
-
+    private void warmup() {
         customTabsClient.warmup(NO_FLAGS);
     }
 

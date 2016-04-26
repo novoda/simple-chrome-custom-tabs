@@ -9,8 +9,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ConnectedClientTest {
@@ -27,47 +28,49 @@ public class ConnectedClientTest {
     }
 
     @Test(expected = DeveloperError.class)
-    public void newSessionThrowsDeveloperErrorIfNotConnected() {
+    public void givenThatClientIsDisconnected_whenStartingNewSession_thenDeveloperErrorIsThrown() {
         connectedClient.disconnect();
 
         connectedClient.newSession();
-
-        verifyZeroInteractions(mockCustomTabsClient);
     }
 
     @Test
-    public void newSessionDelegatesIfConnected() {
+    public void givenThatClientIsConnected_whenStartingNewSession_thenNewSessionIsStarted() {
         connectedClient.newSession();
 
         verify(mockCustomTabsClient).newSession(null);
     }
 
     @Test
-    public void stillConnectedReturnsTrueIfConnected() {
-        assertThat(connectedClient.stillConnected()).isTrue();
+    public void givenThatClientIsConnected_whenCheckingIfStillConnected_thenReturnsTrue() {
+        boolean stillConnected = connectedClient.stillConnected();
+
+        assertThat(stillConnected).isTrue();
     }
 
     @Test
-    public void stillConnectedReturnsFalseIfNotConnected() {
+    public void givenThatClientIsDisconnected_whenCheckingIfStillConnected_thenReturnsTrue() {
         connectedClient.disconnect();
 
-        assertThat(connectedClient.stillConnected()).isFalse();
+        boolean stillConnected = connectedClient.stillConnected();
+
+        assertThat(stillConnected).isFalse();
+    }
+
+    @Test
+    public void givenThatClientIsConnected_whenStartingNewSession_thenClientIsWarmedUp() {
+        connectedClient.newSession();
+
+        verify(mockCustomTabsClient).warmup(0);
     }
 
     @Test(expected = DeveloperError.class)
-    public void warmupThrowsDeveloperErrorIfNotConnected() {
+    public void givenThatClientIsDisconnected_whenStartingNewSession_thenClientIsNotWarmedUp() {
         connectedClient.disconnect();
 
-        connectedClient.warmup();
+        connectedClient.newSession();
 
-        verifyZeroInteractions(mockCustomTabsClient);
-    }
-
-    @Test
-    public void warmupDelegatesIfConnected() {
-        connectedClient.warmup();
-
-        verify(mockCustomTabsClient).warmup(0);
+        verify(mockCustomTabsClient, never()).warmup(anyInt());
     }
 
 }

@@ -102,6 +102,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
         super.onResume();
 
         checkForPackageAvailable();
+        SimpleChromeCustomTabs.getInstance().mayLaunch(WEB_URL);
         SimpleChromeCustomTabs.getInstance().connectTo(this);
     }
 
