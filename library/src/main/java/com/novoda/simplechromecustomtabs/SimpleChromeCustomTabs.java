@@ -109,9 +109,10 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     }
 
     /**
-     * Tells SimpleChromeCustomTabs that a potential Url might be launched. This will do pre DNS resolution that will speed things up.
+     * Tells SimpleChromeCustomTabs that a potential Url might be launched. This will do pre DNS resolution that will speed things up
+     * but it will as well require network usage which can affect batter performance.
+     *
      * @param uri
-     * @return WebNavigator with warmed up url
      */
     @Override
     public void mayLaunch(Uri uri) {
