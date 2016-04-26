@@ -57,7 +57,9 @@ And don't forget to disconnect when the `Activity` is paused.
 
 ```java
 public void onPause() {
-    SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
+    if (SimpleChromeCustomTabs.getInstance().isConnected()) {
+        SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
+    }
     super.onPause();
 }
 ```
