@@ -69,7 +69,7 @@ Uri url = ANY_WEBSITE_URL;
 NavigationFallback fallback = ANY_FALLBACK_MECHANISM; //In case something goes wrong.
 IntentCustomizer customizer = ANY_INTENT_CUSTOMIZER; //To theme your tab.
 
-SimpleChromeCustomTabs.getInstance().withNavigationFallback(fallback)
+SimpleChromeCustomTabs.getInstance().withFallback(fallback)
     .withIntentCustomizer(customizer)
     .navigateTo(url, activity);
 ```
