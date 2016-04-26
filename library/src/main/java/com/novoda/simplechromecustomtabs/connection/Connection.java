@@ -10,7 +10,7 @@ public interface Connection {
 
     boolean isConnected();
 
-    void mayLaunch(Uri url);
+    void mayLaunch(Uri uri);
 
     Session getSession();
 
