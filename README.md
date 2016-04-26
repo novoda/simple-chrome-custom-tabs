@@ -57,7 +57,9 @@ And don't forget to disconnect when the `Activity` is paused.
 
 ```java
 public void onPause() {
-    SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
+    if (SimpleChromeCustomTabs.getInstance().isConnected()) {
+        SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
+    }
     super.onPause();
 }
 ```
@@ -69,7 +71,7 @@ Uri url = ANY_WEBSITE_URL;
 NavigationFallback fallback = ANY_FALLBACK_MECHANISM; //In case something goes wrong.
 IntentCustomizer customizer = ANY_INTENT_CUSTOMIZER; //To theme your tab.
 
-SimpleChromeCustomTabs.getInstance().withNavigationFallback(fallback)
+SimpleChromeCustomTabs.getInstance().withFallback(fallback)
     .withIntentCustomizer(customizer)
     .navigateTo(url, activity);
 ```
