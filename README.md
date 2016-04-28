@@ -47,6 +47,7 @@ SimpleChromeCustomTabs.initialize(context);
 2) Connect `SimpleChromeCustomTabs` to your `Activity` as soon as it is resumed.
 
 ```java
+@Override
 public void onResume() {
     super.onResume();
     SimpleChromeCustomTabs.getInstance().connectTo(this);
@@ -56,6 +57,7 @@ public void onResume() {
 And don't forget to disconnect when the `Activity` is paused.
 
 ```java
+@Override
 public void onPause() {
     if (SimpleChromeCustomTabs.getInstance().isConnected()) {
         SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
