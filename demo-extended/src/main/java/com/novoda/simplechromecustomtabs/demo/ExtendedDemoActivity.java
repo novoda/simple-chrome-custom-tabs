@@ -72,6 +72,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
                     .showingTitle()
                     .withUrlBarHiding()
                     .withCloseButtonIcon(decodeCloseBitmap())
+                    .withDefaultShareMenuItem()
                     .withActionButton(decodeMapBitmap(), getString(R.string.novoda_london), navigateToNovodaLondon(), false)
                     .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode())
                     .withExitAnimations(getApplicationContext(), android.R.anim.slide_in_left, android.R.anim.fade_out)

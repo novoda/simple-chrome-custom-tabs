@@ -96,6 +96,13 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     }
 
     @Test
+    public void givenDefaultShareMenuItemIsSet_thenDefaultShareMenuItemComposerIsAdded() {
+        simpleChromeCustomTabsIntentBuilder.withDefaultShareMenuItem();
+
+        verify(mockComposers).add(any(DefaultShareMenuItemComposer.class));
+    }
+
+    @Test
     public void givenActionButtonIsSet_thenActionButtonComposerIsAdded() {
         simpleChromeCustomTabsIntentBuilder.withActionButton(ANY_ICON, ANY_DESCRIPTION, ANY_PENDING_INTENT, false);
 

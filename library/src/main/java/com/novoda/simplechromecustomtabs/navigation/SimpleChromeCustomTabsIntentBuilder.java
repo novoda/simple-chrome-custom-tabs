@@ -44,6 +44,11 @@ public class SimpleChromeCustomTabsIntentBuilder {
         return this;
     }
 
+    public SimpleChromeCustomTabsIntentBuilder withDefaultShareMenuItem() {
+        composers.add(new DefaultShareMenuItemComposer());
+        return this;
+    }
+
     public SimpleChromeCustomTabsIntentBuilder withActionButton(Bitmap icon, String description, PendingIntent pendingIntent, boolean shouldTint) {
         composers.add(new ActionButtonComposer(icon, description, pendingIntent, shouldTint));
         return this;
