@@ -16,6 +16,10 @@
       </intent-filter>
     </activity>
 
+    <receiver
+      android:name=".ShareBroadcastReceiver"
+      android:enabled="true" />
+
   </application>
 
 </manifest>
