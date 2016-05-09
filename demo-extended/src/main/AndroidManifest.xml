@@ -17,9 +17,9 @@
     </activity>
 
     <receiver
-      android:name=".ShareBroadcastReceiver"
+      android:name="com.novoda.simplechromecustomtabs.demo.ShareBroadcastReceiver"
       android:enabled="true"
-      android:exported="false"/>
+      android:exported="false" />
 
   </application>
 
