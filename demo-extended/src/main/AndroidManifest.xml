@@ -16,6 +16,11 @@
       </intent-filter>
     </activity>
 
+    <receiver
+      android:name="com.novoda.simplechromecustomtabs.demo.ShareBroadcastReceiver"
+      android:enabled="true"
+      android:exported="false" />
+
   </application>
 
 </manifest>

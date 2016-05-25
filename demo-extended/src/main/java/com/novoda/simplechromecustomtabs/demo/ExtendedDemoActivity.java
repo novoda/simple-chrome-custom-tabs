@@ -26,7 +26,7 @@ public class ExtendedDemoActivity extends AppCompatActivity {
 
     private static final Uri WEB_URL = Uri.parse("http://www.novoda.com");
     private static final int REQUEST_CODE_VIEW_SOURCE = 1;
-    private static final int REQUEST_CODE_NOVODA_LONDON = 2;
+    private static final int REQUEST_CODE_SHARE_URL = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,24 +72,25 @@ public class ExtendedDemoActivity extends AppCompatActivity {
                     .showingTitle()
                     .withUrlBarHiding()
                     .withCloseButtonIcon(decodeCloseBitmap())
-                    .withActionButton(decodeMapBitmap(), getString(R.string.novoda_london), navigateToNovodaLondon(), false)
+                    .withDefaultShareMenuItem()
+                    .withActionButton(decodeShareBitmap(), getString(R.string.share), shareUrl(), false)
                     .withMenuItem(getString(R.string.view_demo_source_code), viewSourceCode())
                     .withExitAnimations(getApplicationContext(), android.R.anim.slide_in_left, android.R.anim.fade_out)
                     .withStartAnimations(getApplicationContext(), android.R.anim.fade_in, android.R.anim.slide_out_right);
         }
     };
 
-    private Bitmap decodeMapBitmap() {
-        return BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_mapmode);
+    private Bitmap decodeShareBitmap() {
+        return BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_share);
     }
 
     private Bitmap decodeCloseBitmap() {
         return BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back);
     }
 
-    private PendingIntent navigateToNovodaLondon() {
-        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:51.5411671,-0.0947801"));
-        return PendingIntent.getActivity(ExtendedDemoActivity.this, REQUEST_CODE_NOVODA_LONDON, viewIntent, 0);
+    private PendingIntent shareUrl() {
+        Intent shareIntent = new Intent(ExtendedDemoActivity.this, ShareBroadcastReceiver.class);
+        return PendingIntent.getBroadcast(ExtendedDemoActivity.this, REQUEST_CODE_SHARE_URL, shareIntent, 0);
     }
 
     private PendingIntent viewSourceCode() {
