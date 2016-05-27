@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.novoda:simple-chrome-custom-tabs:0.1.2'
+    compile 'com.novoda:simple-chrome-custom-tabs:0.1.3'
 }
 ```    
 
@@ -59,9 +59,7 @@ And don't forget to disconnect when the `Activity` is paused.
 ```java
 @Override
 public void onPause() {
-    if (SimpleChromeCustomTabs.getInstance().isConnected()) {
-        SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
-    }
+    SimpleChromeCustomTabs.getInstance().disconnectFrom(this);
     super.onPause();
 }
 ```
