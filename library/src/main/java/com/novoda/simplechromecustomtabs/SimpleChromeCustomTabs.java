@@ -91,6 +91,9 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         webNavigator.navigateTo(url, activityContext);
     }
 
+    /**
+     * Releases references to any set {@link IntentCustomizer} or {@link NavigationFallback}
+     */
     @Override
     public void releaseCallbacks() {
         webNavigator.releaseCallbacks();
