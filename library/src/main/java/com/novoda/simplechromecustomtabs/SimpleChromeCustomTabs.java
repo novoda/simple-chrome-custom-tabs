@@ -91,6 +91,11 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         webNavigator.navigateTo(url, activityContext);
     }
 
+    @Override
+    public void releaseCallbacks() {
+        webNavigator.releaseCallbacks();
+    }
+
     /**
      * Connects given activity to {@link android.support.customtabs.CustomTabsService}
      *
@@ -135,6 +140,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         if (isConnected()) {
             connection.disconnectFrom(activity);
         }
+        releaseCallbacks();
     }
 
     @Override

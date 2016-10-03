@@ -43,6 +43,12 @@ public class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
         }
     }
 
+    @Override
+    public void releaseCallbacks() {
+        intentCustomizer = null;
+        navigationFallback = null;
+    }
+
     private CustomTabsIntent buildIntent() {
         SimpleChromeCustomTabsIntentBuilder basicIntentBuilder = SimpleChromeCustomTabsIntentBuilder.newInstance(connection);
 
