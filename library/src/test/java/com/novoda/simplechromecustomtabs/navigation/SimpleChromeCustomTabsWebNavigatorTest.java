@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
-public class SimpleChromeCustomTabsNavigatorTest {
+public class SimpleChromeCustomTabsWebNavigatorTest {
 
     private static final Uri ANY_URL = Uri.EMPTY;
     private static final CustomTabsIntent ANY_INTENT = new CustomTabsIntent.Builder().build();
