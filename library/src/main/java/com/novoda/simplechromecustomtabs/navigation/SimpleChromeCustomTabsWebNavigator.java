@@ -9,8 +9,8 @@ import com.novoda.simplechromecustomtabs.connection.Connection;
 class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
 
     private final Connection connection;
-    private NavigationFallback navigationFallback;
-    private IntentCustomizer intentCustomizer;
+    NavigationFallback navigationFallback;
+    IntentCustomizer intentCustomizer;
 
     SimpleChromeCustomTabsWebNavigator(Connection connection) {
         this.connection = connection;
