@@ -38,7 +38,7 @@ class SimpleChromeCustomTabsWebNavigator implements WebNavigator {
     }
 
     @Override
-    public void releaseCallbacks() {
+    public void release() {
         intentCustomizer = null;
         navigationFallback = null;
     }

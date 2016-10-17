@@ -15,7 +15,7 @@ public interface WebNavigator {
 
     void navigateTo(Uri url, Activity activityContext);
 
-    void releaseCallbacks();
+    void release();
 
     class Creator {
 

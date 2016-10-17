@@ -92,8 +92,8 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
      * Releases references to any set {@link IntentCustomizer} or {@link NavigationFallback}
      */
     @Override
-    public void releaseCallbacks() {
-        webNavigator.releaseCallbacks();
+    public void release() {
+        webNavigator.release();
     }
 
     /**
@@ -140,7 +140,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         if (isConnected()) {
             connection.disconnectFrom(activity);
         }
-        releaseCallbacks();
+        release();
     }
 
     @Override
