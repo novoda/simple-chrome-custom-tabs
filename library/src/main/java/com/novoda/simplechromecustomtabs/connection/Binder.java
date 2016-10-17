@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
-import com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider;
 
 class Binder {
 
@@ -32,7 +31,7 @@ class Binder {
 
         serviceConnection = new ServiceConnection(callback);
         availableAppProvider.findBestPackage(
-                new SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback() {
+                new AvailableAppProvider.PackageFoundCallback() {
                     @Override
                     public void onPackageFound(String packageName) {
                         CustomTabsClient.bindCustomTabsService(context, packageName, serviceConnection);

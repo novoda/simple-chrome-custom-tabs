@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.support.customtabs.CustomTabsIntent;
 
 import com.novoda.notils.exception.DeveloperError;
+import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.Session;
-import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +34,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     private static final Context ANY_CONTEXT = Robolectric.application;
 
     @Mock
-    private SimpleChromeCustomTabsConnection mockSimpleChromeCustomTabsConnection;
+    private Connection mockConnection;
     @Mock
     private List<Composer> mockComposers;
 
@@ -44,9 +44,9 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     public void setUp() {
         initMocks(this);
 
-        simpleChromeCustomTabsIntentBuilder = new SimpleChromeCustomTabsIntentBuilder(mockSimpleChromeCustomTabsConnection, mockComposers);
+        simpleChromeCustomTabsIntentBuilder = new SimpleChromeCustomTabsIntentBuilder(mockConnection, mockComposers);
         when(mockComposers.iterator()).thenReturn(Collections.<Composer>emptyListIterator());
-        when(mockSimpleChromeCustomTabsConnection.getSession()).thenReturn(mock(Session.class));
+        when(mockConnection.getSession()).thenReturn(mock(Session.class));
     }
 
     @Test(expected = DeveloperError.class)
@@ -62,7 +62,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
 
         simpleChromeCustomTabsIntentBuilder.createIntent();
 
-        verify(mockSimpleChromeCustomTabsConnection).getSession();
+        verify(mockConnection).getSession();
     }
 
     @Test
@@ -138,11 +138,11 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     }
 
     private void givenIsDisconnected() {
-        when(mockSimpleChromeCustomTabsConnection.isDisconnected()).thenReturn(true);
+        when(mockConnection.isDisconnected()).thenReturn(true);
     }
 
     private void givenIsConnected() {
-        when(mockSimpleChromeCustomTabsConnection.isConnected()).thenReturn(true);
+        when(mockConnection.isConnected()).thenReturn(true);
     }
 
 }

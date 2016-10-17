@@ -5,9 +5,8 @@ import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
-public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppProvider {
+class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppProvider {
 
     private final BestPackageFinder bestPackageFinder;
     private final Executor executor;
@@ -15,12 +14,6 @@ public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppP
     SimpleChromeCustomTabsAvailableAppProvider(BestPackageFinder bestPackageFinder, Executor executor) {
         this.bestPackageFinder = bestPackageFinder;
         this.executor = executor;
-    }
-
-    public static AvailableAppProvider newInstance() {
-        BestPackageFinder bestPackageFinder = BestPackageFinder.newInstance();
-        Executor executor = Executors.newSingleThreadExecutor();
-        return new SimpleChromeCustomTabsAvailableAppProvider(bestPackageFinder, executor);
     }
 
     @Override
@@ -42,12 +35,6 @@ public class SimpleChromeCustomTabsAvailableAppProvider implements AvailableAppP
                 }
             }
         };
-    }
-
-    public interface PackageFoundCallback {
-        void onPackageFound(String packageName);
-
-        void onPackageNotFound();
     }
 
 }
