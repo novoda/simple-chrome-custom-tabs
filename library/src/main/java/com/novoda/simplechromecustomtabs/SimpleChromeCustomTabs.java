@@ -121,7 +121,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     /**
      * Get current active session for Chrome Custom Tabs usage. Can be used to warmup particular Urls.
-     * {@see {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}}
+     * {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}
      *
      * @return a new {@link CustomTabsSession} or null if not connected to service.
      */
