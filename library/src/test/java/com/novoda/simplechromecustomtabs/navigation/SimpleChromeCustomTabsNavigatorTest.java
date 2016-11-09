@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -41,7 +42,7 @@ public class SimpleChromeCustomTabsNavigatorTest {
     public void setUp() {
         initMocks(this);
 
-        SimpleChromeCustomTabs.initialize(Robolectric.application);
+        SimpleChromeCustomTabs.initialize(RuntimeEnvironment.application);
         when(mockIntentCustomizer.onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class))).thenReturn(mockSimpleChromeCustomTabsIntentBuilder);
         when(mockSimpleChromeCustomTabsIntentBuilder.createIntent()).thenReturn(ANY_INTENT);
         when(mockConnection.getSession()).thenReturn(Session.NULL_SESSION);
