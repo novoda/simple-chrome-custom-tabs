@@ -15,11 +15,12 @@ import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
-public class SimpleChromeCustomTabsNavigatorTest {
+public class SimpleChromeCustomTabsWebNavigatorTest {
 
     private static final Uri ANY_URL = Uri.EMPTY;
     private static final CustomTabsIntent ANY_INTENT = new CustomTabsIntent.Builder().build();
@@ -35,7 +36,7 @@ public class SimpleChromeCustomTabsNavigatorTest {
     @Mock
     private SimpleChromeCustomTabsIntentBuilder mockSimpleChromeCustomTabsIntentBuilder;
 
-    private WebNavigator webNavigator;
+    private SimpleChromeCustomTabsWebNavigator webNavigator;
 
     @Before
     public void setUp() {
@@ -83,6 +84,16 @@ public class SimpleChromeCustomTabsNavigatorTest {
         webNavigator.withIntentCustomizer(mockIntentCustomizer).navigateTo(ANY_URL, mockActivity);
 
         verify(mockIntentCustomizer).onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class));
+    }
+
+    @Test
+    public void givenThereAreCallbacks_whenReleaseIsCalled_thenCallbacksAreReleased() {
+        webNavigator.withFallback(mockNavigationFallback).withIntentCustomizer(mockIntentCustomizer);
+
+        webNavigator.release();
+
+        assertThat(webNavigator.intentCustomizer).isNull();
+        assertThat(webNavigator.navigationFallback).isNull();
     }
 
 }

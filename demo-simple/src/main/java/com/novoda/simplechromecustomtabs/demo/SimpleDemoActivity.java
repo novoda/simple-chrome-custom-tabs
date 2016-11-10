@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 
-import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
+import static com.novoda.simplechromecustomtabs.provider.AvailableAppProvider.PackageFoundCallback;
 
 public class SimpleDemoActivity extends AppCompatActivity {
 

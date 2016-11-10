@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
-import com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
 
-import static com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback;
+import static com.novoda.simplechromecustomtabs.provider.AvailableAppProvider.PackageFoundCallback;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -29,7 +28,7 @@ public class BinderTest {
     @Mock
     private AvailableAppProvider mockAvailableAppProvider;
     @Captor
-    private ArgumentCaptor<SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback> packageFoundCallbackCaptor;
+    private ArgumentCaptor<AvailableAppProvider.PackageFoundCallback> packageFoundCallbackCaptor;
 
     private Binder binder;
 

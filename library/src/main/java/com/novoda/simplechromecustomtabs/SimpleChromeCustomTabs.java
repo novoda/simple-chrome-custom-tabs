@@ -10,14 +10,11 @@ import android.support.customtabs.CustomTabsSession;
 import com.novoda.notils.exception.DeveloperError;
 import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.Session;
-import com.novoda.simplechromecustomtabs.connection.SimpleChromeCustomTabsConnection;
 import com.novoda.simplechromecustomtabs.navigation.IntentCustomizer;
 import com.novoda.simplechromecustomtabs.navigation.NavigationFallback;
 import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsIntentBuilder;
-import com.novoda.simplechromecustomtabs.navigation.SimpleChromeCustomTabsWebNavigator;
 import com.novoda.simplechromecustomtabs.navigation.WebNavigator;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
-import com.novoda.simplechromecustomtabs.provider.SimpleChromeCustomTabsAvailableAppProvider;
 
 import java.util.List;
 
@@ -46,9 +43,9 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     public static void initialize(Context context) {
         applicationContext = context.getApplicationContext();
-        LazyHolder.INSTANCE.connection = SimpleChromeCustomTabsConnection.newInstance();
-        LazyHolder.INSTANCE.webNavigator = SimpleChromeCustomTabsWebNavigator.newInstance();
-        LazyHolder.INSTANCE.availableAppProvider = SimpleChromeCustomTabsAvailableAppProvider.newInstance();
+        LazyHolder.INSTANCE.connection = Connection.Creator.create();
+        LazyHolder.INSTANCE.webNavigator = WebNavigator.Creator.create();
+        LazyHolder.INSTANCE.availableAppProvider = AvailableAppProvider.Creator.create();
     }
 
     public Context getContext() {
@@ -89,6 +86,14 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     @Override
     public void navigateTo(Uri url, Activity activityContext) {
         webNavigator.navigateTo(url, activityContext);
+    }
+
+    /**
+     * Releases references to any set {@link IntentCustomizer} or {@link NavigationFallback}
+     */
+    @Override
+    public void release() {
+        webNavigator.release();
     }
 
     /**
@@ -135,6 +140,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         if (isConnected()) {
             connection.disconnectFrom(activity);
         }
+        release();
     }
 
     @Override
@@ -148,7 +154,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
      * @param packageFoundCallback
      */
     @Override
-    public void findBestPackage(@NonNull SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback) {
+    public void findBestPackage(@NonNull AvailableAppProvider.PackageFoundCallback packageFoundCallback) {
         availableAppProvider.findBestPackage(packageFoundCallback);
     }
 }
