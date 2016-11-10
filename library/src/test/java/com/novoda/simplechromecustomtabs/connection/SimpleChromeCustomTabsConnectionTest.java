@@ -5,12 +5,16 @@ import android.net.Uri;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+@RunWith(RobolectricTestRunner.class)
 public class SimpleChromeCustomTabsConnectionTest {
 
     private static Uri ANY_URI = mock(Uri.class);
@@ -30,7 +34,7 @@ public class SimpleChromeCustomTabsConnectionTest {
     public void setUp() {
         initMocks(this);
 
-        when(mockActivity.getApplicationContext()).thenReturn(Robolectric.application);
+        when(mockActivity.getApplicationContext()).thenReturn(RuntimeEnvironment.application);
         when(mockConnectedClient.newSession()).thenReturn(mock(Session.class));
 
         simpleChromeCustomTabsConnection = new SimpleChromeCustomTabsConnection(mockBinder);

@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -31,7 +32,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
     private static final String ANY_LABEL = "anyLabel";
     private static final String ANY_DESCRIPTION = "any_description";
     private static final Bitmap ANY_ICON = null;
-    private static final Context ANY_CONTEXT = Robolectric.application;
+    private static final Context ANY_CONTEXT = RuntimeEnvironment.application;
 
     @Mock
     private Connection mockConnection;
