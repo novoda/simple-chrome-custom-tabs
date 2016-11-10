@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-public class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
+class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
 
     private final Binder binder;
 
@@ -14,11 +14,6 @@ public class SimpleChromeCustomTabsConnection implements Connection, ServiceConn
 
     SimpleChromeCustomTabsConnection(Binder binder) {
         this.binder = binder;
-    }
-
-    public static Connection newInstance() {
-        Binder binder = Binder.newInstance();
-        return new SimpleChromeCustomTabsConnection(binder);
     }
 
     @Override
