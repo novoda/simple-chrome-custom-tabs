@@ -1,4 +1,4 @@
-# SimpleChromeCustomTabs [![](https://ci.novoda.com/buildStatus/icon?job=simplechromecustomtabs)](https://ci.novoda.com/job/simplechromecustomtabs/lastBuild/console) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
+# SimpleChromeCustomTabs [![](https://ci.novoda.com/buildStatus/icon?job=simple-chrome-custom-tabs)](https://ci.novoda.com/job/simple-chrome-custom-tabs/lastBuild/console) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
 
 
 - Navigating to external websites from your app? 
