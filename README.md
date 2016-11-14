@@ -1,4 +1,4 @@
-# SimpleChromeCustomTabs [![](https://ci.novoda.com/buildStatus/icon?job=simple-chrome-custom-tabs)](https://ci.novoda.com/job/simple-chrome-custom-tabs/lastBuild/console) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
+# simple-chrome-custom-tabs [![](https://ci.novoda.com/buildStatus/icon?job=simple-chrome-custom-tabs)](https://ci.novoda.com/job/simple-chrome-custom-tabs/lastBuild/console) [![Download](https://api.bintray.com/packages/novoda/maven/simple-chrome-custom-tabs/images/download.svg) ](https://bintray.com/novoda/maven/simple-chrome-custom-tabs/_latestVersion) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
 
 
 - Navigating to external websites from your app? 
@@ -9,11 +9,11 @@
 - *"Integrating it into my app can be a pain..."*
 - Not anymore!
 
-**SimpleChromeCustomTabs** will help you with that.
+**simple-chrome-custom-tabs** will help you with that.
 
 ## Description
 
-**SimpleChromeCustomTabs** provides easy integration of Chrome Custom Tabs into your project.
+**simple-chrome-custom-tabs** provides easy integration of Chrome Custom Tabs into your project.
 Just connect it to your activity, and navigate to the external website styling your tab as you wish.
 Moreover with Custom Tabs the navigation can be nearly instantaneous!
 
@@ -38,13 +38,13 @@ dependencies {
 
 ## Simple usage
 
-1) Initialize `SimpleChromeCustomTabs`, you only have to this once.
+1) Initialize `simple-chrome-custom-tabs`, you only have to this once.
 
 ```java
 SimpleChromeCustomTabs.initialize(context);
 ```
 
-2) Connect `SimpleChromeCustomTabs` to your `Activity` as soon as it is resumed.
+2) Connect `simple-chrome-custom-tabs` to your `Activity` as soon as it is resumed.
 
 ```java
 @Override
@@ -79,16 +79,16 @@ SimpleChromeCustomTabs.getInstance().withFallback(fallback)
 
 **And voilà!!**
 
-External Browser | SimpleChromeCustomTabs
+External Browser | simple-chrome-custom-tabs
 --- | ---
-![external_browser](https://github.com/novoda/simplechromecustomtabs/blob/master/art/external_browser.gif) | ![simplechromecustomtabs](https://github.com/novoda/simplechromecustomtabs/blob/master/art/simplechromecustomtabs.gif)
+![external_browser](https://github.com/novoda/simple-chrome-custom-tabs/blob/master/art/external_browser.gif) | ![simplechromecustomtabs](https://github.com/novoda/simple-chrome-custom-tabs/blob/master/art/simplechromecustomtabs.gif)
 
 **Note**: 
-Check the [extended demo](https://github.com/novoda/simplechromecustomtabs/tree/master/demo-extended) for further usage examples.
+Check the [extended demo](https://github.com/novoda/simple-chrome-custom-tabs/tree/master/demo-extended) for further usage examples.
 
 ## Links
 
 Here are a list of useful links:
 
  * We always welcome people to contribute new features or bug fixes, [here is how](https://github.com/novoda/novoda/blob/master/CONTRIBUTING.md)
- * If you have a problem or you feel that important functionality is missing check the [Issues Page](https://github.com/novoda/simplechromecustomtabs/issues) first to see if we are working on it
+ * If you have a problem or you feel that important functionality is missing check the [Issues Page](https://github.com/novoda/simple-chrome-custom-tabs/issues) first to see if we are working on it
