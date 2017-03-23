@@ -12,9 +12,6 @@ public interface AvailableAppProvider {
 
     void findBestPackage(@NonNull SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback, Context context);
 
-    @Deprecated
-    void findBestPackage(@NonNull SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback);
-
     interface PackageFoundCallback {
         void onPackageFound(String packageName);
 

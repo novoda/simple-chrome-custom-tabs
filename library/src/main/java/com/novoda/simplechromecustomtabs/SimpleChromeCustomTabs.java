@@ -143,12 +143,4 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     public void findBestPackage(@NonNull AvailableAppProvider.PackageFoundCallback packageFoundCallback, Context context) {
         availableAppProvider.findBestPackage(packageFoundCallback, context);
     }
-
-    /**
-     * @deprecated use {@link #findBestPackage(PackageFoundCallback, Context)} instead
-     */
-    @Override
-    @Deprecated public void findBestPackage(@NonNull PackageFoundCallback packageFoundCallback) {
-        // do nothing
-    }
 }
