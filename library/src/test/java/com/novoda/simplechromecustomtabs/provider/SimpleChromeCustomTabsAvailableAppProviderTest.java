@@ -1,5 +1,7 @@
 package com.novoda.simplechromecustomtabs.provider;
 
+import android.app.Activity;
+
 import java.util.concurrent.Executor;
 
 import org.junit.Before;
@@ -21,6 +23,8 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     private BestPackageFinder mockBestPackageFinder;
     @Mock
     private SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback mockPackageFoundCallback;
+    @Mock
+    private Activity mockActivity;
 
     private SimpleChromeCustomTabsAvailableAppProvider simpleChromeCustomTabsAvailableAppProvider;
 
@@ -33,16 +37,16 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
 
     @Test
     public void findBestPackageDelegatesToPackageFinder() {
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback, mockActivity);
 
-        verify(mockBestPackageFinder).findBestPackage();
+        verify(mockBestPackageFinder).findBestPackage(mockActivity);
     }
 
     @Test
     public void packageIsFoundIfNotNullOrEmpty() {
         givenThatPackageNameIsNotNullOrEmpty();
 
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback, mockActivity);
 
         verify(mockPackageFoundCallback).onPackageFound(NON_EMPTY_PACKAGE);
     }
@@ -51,7 +55,7 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     public void packageIsNotFoundIfNull() {
         givenThatPackageIsNull();
 
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback, mockActivity);
 
         verify(mockPackageFoundCallback).onPackageNotFound();
     }
@@ -60,7 +64,7 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     public void packageNotFoundIfEmpty() {
         givenThatPackageIsEmpty();
 
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback, mockActivity);
 
         verify(mockPackageFoundCallback).onPackageNotFound();
     }
@@ -69,7 +73,7 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     public void ifPackageIsFoundThenPackageNotFoundWillNotBeCalled() {
         givenThatPackageIsFound();
 
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback, mockActivity);
 
         verify(mockPackageFoundCallback, never()).onPackageNotFound();
     }
@@ -78,21 +82,21 @@ public class SimpleChromeCustomTabsAvailableAppProviderTest {
     public void ifPackageIsNotFoundThenPackageFoundWillNotBeCalled() {
         givenThatPackageIsNotFound();
 
-        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback);
+        simpleChromeCustomTabsAvailableAppProvider.findBestPackage(mockPackageFoundCallback, mockActivity);
 
         verify(mockPackageFoundCallback, never()).onPackageFound(anyString());
     }
 
     private void givenThatPackageNameIsNotNullOrEmpty() {
-        when(mockBestPackageFinder.findBestPackage()).thenReturn(NON_EMPTY_PACKAGE);
+        when(mockBestPackageFinder.findBestPackage(mockActivity)).thenReturn(NON_EMPTY_PACKAGE);
     }
 
     private void givenThatPackageIsNull() {
-        when(mockBestPackageFinder.findBestPackage()).thenReturn(null);
+        when(mockBestPackageFinder.findBestPackage(mockActivity)).thenReturn(null);
     }
 
     private void givenThatPackageIsEmpty() {
-        when(mockBestPackageFinder.findBestPackage()).thenReturn("");
+        when(mockBestPackageFinder.findBestPackage(mockActivity)).thenReturn("");
     }
 
     private void givenThatPackageIsFound() {

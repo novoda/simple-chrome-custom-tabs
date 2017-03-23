@@ -1,5 +1,6 @@
 package com.novoda.simplechromecustomtabs.provider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -10,37 +11,44 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
 public class BestPackageFinderTest {
 
     private static final String DEFAULT_PACKAGE = "default.package";
     private static final String OTHER_PACKAGE = "other.package";
+
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
     @Mock
     private PackageManager mockPackageManager;
+    @Mock
+    private Activity mockActivity;
 
     private BestPackageFinder bestPackageFinder;
 
     @Before
     public void setUp() {
-        initMocks(this);
-
-        bestPackageFinder = new BestPackageFinder(mockPackageManager);
+        bestPackageFinder = new BestPackageFinder();
+        when(mockActivity.getPackageManager()).thenReturn(mockPackageManager);
     }
 
     @Test
     public void returnsEmptyPackageIfNoPackageSupportingCustomTabsIsFound() {
         givenThatThereIsNoPackagesSupportingCustomTabs();
 
-        assertThat(bestPackageFinder.findBestPackage()).isEmpty();
+        assertThat(bestPackageFinder.findBestPackage(mockActivity)).isEmpty();
     }
 
     @Test
@@ -48,7 +56,7 @@ public class BestPackageFinderTest {
         givenThatDefaultPackageIs(DEFAULT_PACKAGE);
         givenThatPackagesSupportingCustomTabsIs(DEFAULT_PACKAGE);
 
-        assertThat(bestPackageFinder.findBestPackage()).isEqualTo(DEFAULT_PACKAGE);
+        assertThat(bestPackageFinder.findBestPackage(mockActivity)).isEqualTo(DEFAULT_PACKAGE);
     }
 
     @Test
@@ -56,7 +64,7 @@ public class BestPackageFinderTest {
         givenThatDefaultPackageIs(DEFAULT_PACKAGE);
         givenThatPackagesSupportingCustomTabsIs(OTHER_PACKAGE);
 
-        assertThat(bestPackageFinder.findBestPackage()).isEqualTo(OTHER_PACKAGE);
+        assertThat(bestPackageFinder.findBestPackage(mockActivity)).isEqualTo(OTHER_PACKAGE);
     }
 
     private void givenThatThereIsNoPackagesSupportingCustomTabs() {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.Session;
 
@@ -12,9 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -43,7 +40,6 @@ public class SimpleChromeCustomTabsWebNavigatorTest {
     public void setUp() {
         initMocks(this);
 
-        SimpleChromeCustomTabs.initialize(RuntimeEnvironment.application);
         when(mockIntentCustomizer.onCustomiseIntent(any(SimpleChromeCustomTabsIntentBuilder.class))).thenReturn(mockSimpleChromeCustomTabsIntentBuilder);
         when(mockSimpleChromeCustomTabsIntentBuilder.createIntent()).thenReturn(ANY_INTENT);
         when(mockConnection.getSession()).thenReturn(Session.NULL_SESSION);

@@ -9,8 +9,6 @@ import android.support.annotation.WorkerThread;
 import android.support.customtabs.CustomTabsService;
 import android.text.TextUtils;
 
-import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,26 +18,15 @@ class BestPackageFinder {
     private static final String ANY_URL = "http://www.example.com";
     private static final Intent INTENT_TO_EXTERNAL_LINK = new Intent(Intent.ACTION_VIEW, Uri.parse(ANY_URL));
 
-    private final PackageManager packageManager;
-
-    BestPackageFinder(PackageManager packageManager) {
-        this.packageManager = packageManager;
-    }
-
-    public static BestPackageFinder newInstance() {
-        Context context = SimpleChromeCustomTabs.getInstance().getContext();
-        PackageManager packageManager = context.getPackageManager();
-        return new BestPackageFinder(packageManager);
-    }
-
     @WorkerThread
-    public String findBestPackage() {
-        List<String> packagesSupportingCustomTabs = getPackagesSupportingCustomTabs();
+    public String findBestPackage(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        List<String> packagesSupportingCustomTabs = getPackagesSupportingCustomTabs(packageManager);
         if (packagesSupportingCustomTabs.isEmpty()) {
             return NO_PACKAGE_FOUND;
         }
 
-        String defaultPackage = getDefaultPackage();
+        String defaultPackage = getDefaultPackage(packageManager);
         if (packagesSupportingCustomTabs.contains(defaultPackage)) {
             return defaultPackage;
         }
@@ -47,7 +34,7 @@ class BestPackageFinder {
         return packagesSupportingCustomTabs.get(0);
     }
 
-    private String getDefaultPackage() {
+    private String getDefaultPackage(PackageManager packageManager) {
         ResolveInfo defaultActivityInfo = packageManager.resolveActivity(INTENT_TO_EXTERNAL_LINK, 0);
 
         if (defaultActivityInfo == null) {
@@ -59,7 +46,7 @@ class BestPackageFinder {
         return TextUtils.isEmpty(packageName) ? NO_PACKAGE_FOUND : packageName;
     }
 
-    private List<String> getPackagesSupportingCustomTabs() {
+    private List<String> getPackagesSupportingCustomTabs(PackageManager packageManager) {
         List<ResolveInfo> resolvedInfoList = packageManager.queryIntentActivities(INTENT_TO_EXTERNAL_LINK, 0);
         List<String> packagesSupportingCustomTabs = new ArrayList<>();
         for (ResolveInfo info : resolvedInfoList) {

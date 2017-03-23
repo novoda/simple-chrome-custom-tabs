@@ -1,5 +1,6 @@
 package com.novoda.simplechromecustomtabs.provider;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.novoda.notils.exception.DeveloperError;
@@ -9,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public interface AvailableAppProvider {
 
-    void findBestPackage(@NonNull SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback);
+    void findBestPackage(@NonNull SimpleChromeCustomTabsAvailableAppProvider.PackageFoundCallback packageFoundCallback, Context context);
 
     interface PackageFoundCallback {
         void onPackageFound(String packageName);
@@ -24,7 +25,7 @@ public interface AvailableAppProvider {
         }
 
         public static AvailableAppProvider create() {
-            BestPackageFinder bestPackageFinder = BestPackageFinder.newInstance();
+            BestPackageFinder bestPackageFinder = new BestPackageFinder();
             Executor executor = Executors.newSingleThreadExecutor();
             return new SimpleChromeCustomTabsAvailableAppProvider(bestPackageFinder, executor);
         }

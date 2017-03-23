@@ -54,7 +54,7 @@ public class SimpleDemoActivity extends AppCompatActivity {
     }
 
     private void checkForPackageAvailable() {
-        SimpleChromeCustomTabs.getInstance().findBestPackage(packageFoundCallback);
+        SimpleChromeCustomTabs.getInstance().findBestPackage(packageFoundCallback, this);
     }
 
     private final PackageFoundCallback packageFoundCallback = new PackageFoundCallback() {

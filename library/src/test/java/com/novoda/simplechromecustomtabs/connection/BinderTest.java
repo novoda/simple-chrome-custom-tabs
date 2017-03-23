@@ -1,25 +1,31 @@
 package com.novoda.simplechromecustomtabs.connection;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import static com.novoda.simplechromecustomtabs.provider.AvailableAppProvider.PackageFoundCallback;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
 public class BinderTest {
+
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Activity mockActivity;
@@ -34,8 +40,6 @@ public class BinderTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
-
         packageFoundCallbackCaptor = ArgumentCaptor.forClass(PackageFoundCallback.class);
         binder = new Binder(mockAvailableAppProvider);
     }
@@ -98,12 +102,12 @@ public class BinderTest {
     }
 
     private void whenPackageIsFound() {
-        verify(mockAvailableAppProvider).findBestPackage(packageFoundCallbackCaptor.capture());
+        verify(mockAvailableAppProvider).findBestPackage(packageFoundCallbackCaptor.capture(), any(Context.class));
         packageFoundCallbackCaptor.getValue().onPackageFound("anyPackage");
     }
 
     private void whenPackageIsNotFound() {
-        verify(mockAvailableAppProvider).findBestPackage(packageFoundCallbackCaptor.capture());
+        verify(mockAvailableAppProvider).findBestPackage(packageFoundCallbackCaptor.capture(), any(Context.class));
         packageFoundCallbackCaptor.getValue().onPackageNotFound();
     }
 

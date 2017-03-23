@@ -7,7 +7,6 @@ import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsServiceConnection;
 import android.util.Log;
 
-import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
 
 class Binder {
@@ -17,11 +16,6 @@ class Binder {
 
     Binder(@NonNull AvailableAppProvider availableAppProvider) {
         this.availableAppProvider = availableAppProvider;
-    }
-
-    public static Binder newInstance() {
-        AvailableAppProvider availableAppProvider = SimpleChromeCustomTabs.getInstance();
-        return new Binder(availableAppProvider);
     }
 
     public void bindCustomTabsServiceTo(@NonNull final Context context, ServiceConnectionCallback callback) {
@@ -41,7 +35,7 @@ class Binder {
                     public void onPackageNotFound() {
                         serviceConnection = null;
                     }
-                }
+                }, context
         );
     }
 
