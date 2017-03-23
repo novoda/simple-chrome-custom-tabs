@@ -52,6 +52,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     /**
      * Provides a {@link NavigationFallback} to specify navigation mechanism in case of no Chrome Custom Tabs support found.
      *
+     * @param navigationFallback
      * @return WebNavigator with navigation fallback.
      */
     @Override
@@ -63,6 +64,7 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
      * Provides a {@link IntentCustomizer} to be used to customize the Chrome Custom Tabs by attacking directly to
      * {@link SimpleChromeCustomTabsIntentBuilder}
      *
+     * @param intentCustomizer
      * @return WebNavigator with customized Chrome Custom Tabs.
      */
     @Override
@@ -74,6 +76,9 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
      * Navigates to the given url using Chrome Custom Tabs if available.
      * If there is no application supporting Chrome Custom Tabs and {@link NavigationFallback}
      * is provided it will be used to redirect navigation.
+     *
+     * @param url
+     * @param activityContext
      */
     @Override
     public void navigateTo(Uri url, Activity activityContext) {
@@ -90,6 +95,8 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     /**
      * Connects given activity to {@link android.support.customtabs.CustomTabsService}
+     *
+     * @param activity
      */
     @Override
     public void connectTo(@NonNull Activity activity) {
@@ -106,6 +113,8 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     /**
      * Tells SimpleChromeCustomTabs that a potential Url might be launched. This will do pre DNS resolution that will speed things up
      * but it will as well require network usage which can affect batter performance.
+     *
+     * @param uri
      */
     @Override
     public void mayLaunch(Uri uri) {
@@ -138,6 +147,8 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
 
     /**
      * Asynchronous search for the best package with support for Chrome Custom Tabs.
+     *
+     * @param packageFoundCallback
      */
     @Override
     public void findBestPackage(@NonNull AvailableAppProvider.PackageFoundCallback packageFoundCallback, Context context) {
