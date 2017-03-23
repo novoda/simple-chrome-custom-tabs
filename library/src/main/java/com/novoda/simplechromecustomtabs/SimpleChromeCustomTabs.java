@@ -23,6 +23,14 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     private WebNavigator webNavigator;
     private AvailableAppProvider availableAppProvider;
 
+    /**
+     * @deprecated There is no need to call it anymore in order to use this library,
+     * use {@link #getInstance()} instead
+     */
+    @Deprecated public static void initialize(Context context) {
+        // do nothing
+    }
+
     public static SimpleChromeCustomTabs getInstance() {
         return LazyHolder.INSTANCE.getSimpleChromeCustomTabs();
     }
