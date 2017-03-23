@@ -19,23 +19,19 @@ import java.util.List;
 
 public final class SimpleChromeCustomTabs implements WebNavigator, Connection, AvailableAppProvider {
 
-    private final Connection connection;
-    private final WebNavigator webNavigator;
-    private final AvailableAppProvider availableAppProvider;
+    private Connection connection;
+    private WebNavigator webNavigator;
+    private AvailableAppProvider availableAppProvider;
 
     public static SimpleChromeCustomTabs getInstance() {
-        return LazyHolder.INSTANCE;
+        return LazyHolder.INSTANCE.getSimpleChromeCustomTabs();
     }
 
     private static class LazyHolder {
-        private static final SimpleChromeCustomTabs INSTANCE = new SimpleChromeCustomTabs(
-                Connection.Creator.create(),
-                WebNavigator.Creator.create(),
-                AvailableAppProvider.Creator.create()
-        );
+        private static final SimpleChromeCustomTabsProvider INSTANCE = new SimpleChromeCustomTabsProvider();
     }
 
-    private SimpleChromeCustomTabs(Connection connection, WebNavigator webNavigator, AvailableAppProvider availableAppProvider) {
+    void injectModules(Connection connection, WebNavigator webNavigator, AvailableAppProvider availableAppProvider) {
         this.connection = connection;
         this.webNavigator = webNavigator;
         this.availableAppProvider = availableAppProvider;
