@@ -39,6 +39,10 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
         private static final SimpleChromeCustomTabsProvider INSTANCE = new SimpleChromeCustomTabsProvider();
     }
 
+    SimpleChromeCustomTabs() {
+        // no-op
+    }
+
     void injectModules(Connection connection, WebNavigator webNavigator, AvailableAppProvider availableAppProvider) {
         this.connection = connection;
         this.webNavigator = webNavigator;
@@ -138,5 +142,13 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     @Override
     public void findBestPackage(@NonNull AvailableAppProvider.PackageFoundCallback packageFoundCallback, Context context) {
         availableAppProvider.findBestPackage(packageFoundCallback, context);
+    }
+
+    /**
+     * @deprecated use {@link #findBestPackage(PackageFoundCallback, Context)} instead
+     */
+    @Override
+    @Deprecated public void findBestPackage(@NonNull PackageFoundCallback packageFoundCallback) {
+        // do nothing
     }
 }
