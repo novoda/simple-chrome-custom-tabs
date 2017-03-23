@@ -10,7 +10,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class SimpleChromeCustomTabsTest {
 
     @Test
-    public void givenSimpleChromeCustomTabsIsInitialised_whenGettingInstance_thenInstanceIsReturned() {
+    public void whenGettingInstance_thenInstanceIsReturned() {
         assertThat(SimpleChromeCustomTabs.getInstance()).isInstanceOf(SimpleChromeCustomTabs.class);
     }
 }
