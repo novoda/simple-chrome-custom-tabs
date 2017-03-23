@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-public class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
+class SimpleChromeCustomTabsConnection implements Connection, ServiceConnectionCallback {
 
     private final Binder binder;
 

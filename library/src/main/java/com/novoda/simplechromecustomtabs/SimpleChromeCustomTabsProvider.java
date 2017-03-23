@@ -8,7 +8,7 @@ class SimpleChromeCustomTabsProvider {
 
     private final SimpleChromeCustomTabs simpleChromeCustomTabs;
 
-    public SimpleChromeCustomTabsProvider() {
+    SimpleChromeCustomTabsProvider() {
         simpleChromeCustomTabs = new SimpleChromeCustomTabs();
 
         Connection connection = Connection.Creator.create(simpleChromeCustomTabs);
@@ -18,7 +18,7 @@ class SimpleChromeCustomTabsProvider {
         simpleChromeCustomTabs.injectModules(connection, webNavigator, availableAppProvider);
     }
 
-    public SimpleChromeCustomTabs getSimpleChromeCustomTabs() {
+    SimpleChromeCustomTabs getSimpleChromeCustomTabs() {
         return simpleChromeCustomTabs;
     }
 }
