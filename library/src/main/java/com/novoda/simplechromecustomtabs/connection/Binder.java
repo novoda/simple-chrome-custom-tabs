@@ -41,7 +41,7 @@ class Binder {
                     public void onPackageNotFound() {
                         serviceConnection = null;
                     }
-                }
+                }, context
         );
     }
 
