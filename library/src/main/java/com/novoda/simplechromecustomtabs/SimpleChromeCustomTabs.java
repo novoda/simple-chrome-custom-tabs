@@ -24,10 +24,10 @@ public final class SimpleChromeCustomTabs implements WebNavigator, Connection, A
     private AvailableAppProvider availableAppProvider;
 
     /**
-     * @deprecated There is no need to call it anymore in order to use this library,
+     * This is not needed for library use but it may become needed in the future,
      * use {@link #getInstance()} instead
      */
-    @Deprecated public static void initialize(Context context) {
+    public static void initialize(Context context) {
         // do nothing
     }
 
