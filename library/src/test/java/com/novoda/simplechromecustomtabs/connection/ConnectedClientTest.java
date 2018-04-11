@@ -2,8 +2,6 @@ package com.novoda.simplechromecustomtabs.connection;
 
 import android.support.customtabs.CustomTabsClient;
 
-import com.novoda.notils.exception.DeveloperError;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -27,7 +25,7 @@ public class ConnectedClientTest {
         connectedClient = new ConnectedClient(mockCustomTabsClient);
     }
 
-    @Test(expected = DeveloperError.class)
+    @Test(expected = IllegalStateException.class)
     public void givenThatClientIsDisconnected_whenStartingNewSession_thenDeveloperErrorIsThrown() {
         connectedClient.disconnect();
 
@@ -64,7 +62,7 @@ public class ConnectedClientTest {
         verify(mockCustomTabsClient).warmup(0);
     }
 
-    @Test(expected = DeveloperError.class)
+    @Test(expected = IllegalStateException.class)
     public void givenThatClientIsDisconnected_whenStartingNewSession_thenClientIsNotWarmedUp() {
         connectedClient.disconnect();
 

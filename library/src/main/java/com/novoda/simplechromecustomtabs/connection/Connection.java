@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.novoda.notils.exception.DeveloperError;
 import com.novoda.simplechromecustomtabs.provider.AvailableAppProvider;
 
 public interface Connection {
@@ -24,7 +23,7 @@ public interface Connection {
     class Creator {
 
         private Creator() {
-            throw new DeveloperError("Shouldn't be instantiated");
+            throw new IllegalStateException("Shouldn't be instantiated");
         }
 
         public static Connection create(AvailableAppProvider availableAppProvider) {
