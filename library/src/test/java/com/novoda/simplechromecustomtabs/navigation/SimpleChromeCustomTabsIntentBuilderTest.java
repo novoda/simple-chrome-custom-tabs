@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.notils.exception.DeveloperError;
 import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.Session;
 
@@ -15,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 
@@ -50,7 +48,7 @@ public class SimpleChromeCustomTabsIntentBuilderTest {
         when(mockConnection.getSession()).thenReturn(mock(Session.class));
     }
 
-    @Test(expected = DeveloperError.class)
+    @Test(expected = IllegalStateException.class)
     public void givenThereIsNoConnection_whenCreatingIntent_thenDeveloperErrorIsThrown() {
         givenIsDisconnected();
 

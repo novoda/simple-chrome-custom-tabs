@@ -7,7 +7,6 @@ import android.support.annotation.AnimRes;
 import android.support.annotation.ColorInt;
 import android.support.customtabs.CustomTabsIntent;
 
-import com.novoda.notils.exception.DeveloperError;
 import com.novoda.simplechromecustomtabs.connection.Connection;
 import com.novoda.simplechromecustomtabs.connection.Session;
 
@@ -79,7 +78,7 @@ public class SimpleChromeCustomTabsIntentBuilder {
      */
     public CustomTabsIntent createIntent() {
         if (connection.isDisconnected()) {
-            throw new DeveloperError("An active connection to custom tabs service is required for intent creation");
+            throw new IllegalStateException("An active connection to custom tabs service is required for intent creation");
         }
 
         Session session = connection.getSession();

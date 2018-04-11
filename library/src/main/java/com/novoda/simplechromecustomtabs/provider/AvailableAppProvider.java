@@ -3,8 +3,6 @@ package com.novoda.simplechromecustomtabs.provider;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.novoda.notils.exception.DeveloperError;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -21,7 +19,7 @@ public interface AvailableAppProvider {
     class Creator {
 
         private Creator() {
-            throw new DeveloperError("Shouldn't be instantiated");
+            throw new IllegalStateException("Shouldn't be instantiated");
         }
 
         public static AvailableAppProvider create() {

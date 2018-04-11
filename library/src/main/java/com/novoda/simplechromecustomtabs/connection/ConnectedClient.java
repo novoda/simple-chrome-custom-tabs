@@ -3,8 +3,6 @@ package com.novoda.simplechromecustomtabs.connection;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsClient;
 
-import com.novoda.notils.exception.DeveloperError;
-
 class ConnectedClient {
 
     private static final int NO_FLAGS = 0;
@@ -17,7 +15,7 @@ class ConnectedClient {
 
     public Session newSession() {
         if (!stillConnected()) {
-            throw new DeveloperError("Cannot start session on a disconnected client. Use stillConnected() to check connection");
+            throw new IllegalStateException("Cannot start session on a disconnected client. Use stillConnected() to check connection");
         }
 
         warmup();
