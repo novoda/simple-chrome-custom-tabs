@@ -1,17 +1,7 @@
 # simple-chrome-custom-tabs [![](https://ci.novoda.com/buildStatus/icon?job=simple-chrome-custom-tabs)](https://ci.novoda.com/job/simple-chrome-custom-tabs/lastBuild/console) [![Download](https://api.bintray.com/packages/novoda/maven/simple-chrome-custom-tabs/images/download.svg) ](https://bintray.com/novoda/maven/simple-chrome-custom-tabs/_latestVersion) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
 
 
-- Navigating to external websites from your app? 
-- *"Yes, that one is easy"*
-- Wondering how to keep the user in context?
-- *"I know... it can be done using WebView, but I don't like it that much"*
-- Aha! Why don't you try Chrome Custom Tabs? 
-- *"Integrating it into my app can be a pain..."*
-- Not anymore!
-
-**simple-chrome-custom-tabs** will help you with that.
-
-## Description
+- Navigating to external wfsdfhjsdfljksdf
 
 **simple-chrome-custom-tabs** provides easy integration of Chrome Custom Tabs into your project.
 Just connect it to your activity, and navigate to the external website styling your tab as you wish.
