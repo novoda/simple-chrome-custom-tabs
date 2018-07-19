@@ -42,7 +42,7 @@ publish {
     groupId = 'com.novoda'
     artifactId = 'simple-chrome-custom-tabs'
     publishVersion = '0.1.6'
-    description = 'Provides easy integration of Chrome Custom Tabs into your project.'
+    desc = 'Provides easy integration of Chrome Custom Tabs into your project.'
     website = 'https://github.com/novoda/simplechromecustomtabs'
 }
 
