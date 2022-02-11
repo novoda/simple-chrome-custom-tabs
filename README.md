@@ -1,3 +1,5 @@
+# 🛑 THIS REPOSITORY IS OFFICIALLY NO LONGER UNDER MAINTENANCE since 10/02/2022 🛑
+
 # simple-chrome-custom-tabs [![](https://ci.novoda.com/buildStatus/icon?job=simple-chrome-custom-tabs)](https://ci.novoda.com/job/simple-chrome-custom-tabs/lastBuild/console) [![Download](https://api.bintray.com/packages/novoda/maven/simple-chrome-custom-tabs/images/download.svg) ](https://bintray.com/novoda/maven/simple-chrome-custom-tabs/_latestVersion) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENCE.txt)
 
 
